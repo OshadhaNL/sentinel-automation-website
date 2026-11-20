@@ -1,0 +1,26 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Frontend
+node_modules/
+dist/
+.vite/
+*.log
+
+# Python (backend implementation follows later)
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Generated reports
+storage/reports/*
+!storage/reports/.gitkeep
+
+# Editor and OS
+.vscode/
+.DS_Store
+Thumbs.db
