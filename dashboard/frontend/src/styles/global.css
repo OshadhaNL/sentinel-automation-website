@@ -72,7 +72,7 @@ button { color: inherit; }
 .page-heading h1 { font-size: 36px; line-height: 1.2; font-weight: 750; letter-spacing: -1.2px; margin-bottom: 3px; }
 .page-heading p { color: var(--text-secondary); font-size: 20px; font-weight: 550; }
 .sample-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); white-space: nowrap; }
-.stats-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-bottom: 28px; }
+.stats-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-bottom: 28px; }
 .stat-card { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 20px 16px; min-height: 98px; border: 1px solid var(--border); border-radius: 13px; background: white; box-shadow: 0 3px 7px #11182704, 0 2px 4px #11182703; }
 .stat-icon { display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; }
 .stat-total .stat-icon { color: var(--primary); }
@@ -161,6 +161,9 @@ tbody tr:hover { background: #F8FAFC; }
   .chart-legend { flex: 0 1 auto; }
   .executions-panel { min-height: 310px; }
 }
+@media (max-width: 1400px) {
+  .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 @media (max-width: 1200px) {
   .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .stat-card { justify-content: flex-start; padding-left: 16px; }
@@ -214,7 +217,6 @@ tbody tr:hover { background: #F8FAFC; }
 }
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .stat-card:last-child { grid-column: 1 / -1; }
   .distribution-panel { padding: 18px 14px 22px; }
   .distribution-body { flex-direction: column; gap: 12px; }
   .donut-wrap { width: 220px; }
@@ -231,6 +233,36 @@ tbody tr:hover { background: #F8FAFC; }
 }
 
 /* Authentication */
+.connection-state { display: grid; min-height: 100vh; place-items: center; color: var(--text-secondary); }
+.test-cases-panel { margin-top: 24px; }
+.test-filters { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 20px 20px; }
+.test-filters input, .test-filters select { min-height: 42px; border: 1px solid #CBD1DA; border-radius: 7px; padding: 8px 12px; background: white; font-size: 14px; max-width: 100%; }
+.test-filters input { flex: 1; min-width: 190px; }
+.test-name-cell { min-width: 210px; max-width: 350px; white-space: normal; overflow-wrap: anywhere; }
+.test-name-cell small { display: block; font-size: 14px; line-height: 1.5; margin: 4px 0; }
+.test-name-cell pre { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 450px; font-size: 12px; }
+.test-actions { display: flex; align-items: center; gap: 8px; }
+.pagination { display: flex; align-items: center; justify-content: flex-end; gap: 14px; padding: 18px 20px; font-size: 14px; }
+.pagination .secondary-button { min-height: 38px; padding: 8px 14px; }
+.run-status-content, .test-detail-content { padding: 4px 24px; }
+.run-status-content h3, .test-detail-content h3 { font-size: 18px; line-height: 1.6; overflow-wrap: anywhere; }
+.run-status-content .panel-note { padding: 10px 0; }
+.run-status-content progress { width: 100%; height: 13px; accent-color: var(--primary); margin: 14px 0; }
+.run-report-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 22px 0; font-size: 14px; }
+.report-links { display: inline-flex; align-items: center; gap: 9px; }
+.report-links a { display: inline-flex; padding: 4px 8px; color: var(--primary-hover); background: var(--primary-light); border-radius: 5px; font-size: 13px; font-weight: 600; text-decoration: none; }
+.report-links a:hover { text-decoration: underline; }
+.status-error { color: var(--failed); background: var(--failed-bg); }
+.status-not-run, .status-not-executed { color: var(--primary); background: var(--primary-light); }
+.status-pending, .status-running { color: var(--text-secondary); background: var(--skipped-bg); }
+.mock-run-label { display: block; font-size: 12px; color: var(--primary); font-weight: 600; }
+.inventory-warning { border-left: 3px solid var(--primary); background: var(--primary-light); padding: 12px 15px; color: #7B2852; font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.execution-busy { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 14px 18px; margin-bottom: 20px; border: 1px solid #F2D2E3; border-radius: 10px; background: var(--primary-light); font-size: 14px; }
+.history-heading { margin-top: 22px; margin-bottom: 12px; }
+.test-detail-content > .muted { display: block; line-height: 1.8; margin: 8px 0 20px; }
+.node-id { display: block; overflow-wrap: anywhere; font-size: 13px; padding: 14px 0; }
+.table-run-button:disabled { opacity: .5; cursor: not-allowed; }
+.executions-table .run-link { white-space: nowrap; }
 .page-heading-actions { display: flex; align-items: center; justify-content: flex-end; gap: 16px; flex-wrap: wrap; }
 .run-tests-button { min-height: 43px; font-size: 15px; white-space: nowrap; }
 .table-run-button { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border: 1px solid #F2D2E3; border-radius: 6px; color: var(--primary-hover); background: var(--primary-light); font-size: 14px; font-weight: 600; }
@@ -284,6 +316,8 @@ tbody tr:hover { background: #F8FAFC; }
 .form-field input::placeholder { color: var(--text-muted); }
 .form-field input:focus { outline: 3px solid var(--primary-light); border-color: var(--primary); }
 .form-field input[aria-invalid="true"] { border-color: var(--failed); }
+.worker-tip { margin-top: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--primary-light); font-size: 13px; line-height: 1.5; }
+.worker-tip p { margin: 5px 0; color: var(--text-secondary); }
 .password-field { position: relative; }
 .password-field input { padding-right: 50px; }
 .password-toggle { position: absolute; right: 5px; top: 5px; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 6px; background: transparent; color: var(--text-secondary); }

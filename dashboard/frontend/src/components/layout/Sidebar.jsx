@@ -1,12 +1,12 @@
 import Icon from '../common/Icon.jsx';
-import { modules } from '../../data/dashboard.js';
 
-export default function Sidebar({ view, onNavigate, open, onClose, user }) {
+export default function Sidebar({ view, onNavigate, open, onClose, user, modules = [] }) {
   const links = [
     { id: 'overview', label: 'Dashboard', icon: 'home' },
     { id: 'all', label: 'All Systems', icon: 'layers' },
     ...modules.map((module) => ({ id: module.name, label: module.name, icon: module.icon })),
     { id: 'reports', label: 'Reports', icon: 'reports' },
+    { id: 'history', label: 'Executions', icon: 'clock' },
     ...(user.role === 'admin' ? [{ id: 'testers', label: 'Testers', icon: 'users' }] : []),
   ];
   return (

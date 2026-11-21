@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Icon from '../../components/common/Icon.jsx';
-import { signInDemo, createTesterPreview } from '../../services/demoAuth.js';
+import { login } from '../../services/api.js';
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ export default function Login({ onLogin }) {
     setSubmitting(true);
     setError('');
     try {
-      onLogin(await signInDemo(email, password));
+      onLogin(await login(email, password));
     } catch (failure) {
       setError(failure.message);
     } finally {
@@ -61,8 +61,7 @@ export default function Login({ onLogin }) {
             {error && <p id="login-error" className="form-error" role="alert"><Icon name="alert" size={18} />{error}</p>}
             <button className="primary-button login-submit" type="submit" disabled={submitting}>{submitting ? 'Signing in…' : 'Sign in'}</button>
           </form>
-          <div className="login-demo-note"><Icon name="sample" size={18} /><p><strong>Frontend demo</strong>Sign in with the supplied admin or tester credentials, or a tester created in this tab. Reloading clears created accounts. No live authentication is connected.</p></div>
-          <button className="tester-preview-button" type="button" onClick={() => onLogin(createTesterPreview())}>Explore tester preview</button>
+          <div className="login-demo-note"><Icon name="shield" size={18} /><p><strong>Your Sentinel account</strong>Sign in with your admin or tester account. Contact your administrator if you need access.</p></div>
         </div>
         <p className="login-footer">Sentinel Automation Dashboard</p>
       </section>

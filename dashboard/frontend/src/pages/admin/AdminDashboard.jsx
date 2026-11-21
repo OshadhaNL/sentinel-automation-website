@@ -11,9 +11,9 @@ export default function AdminDashboard(props) {
       </div>
       <Dashboard {...props} />
       <section className="panel admin-summary-panel" aria-label="Administration overview">
-        <div className="admin-summary-item"><span className="admin-summary-icon"><Icon name="layers" /></span><div><h2>System coverage</h2><p><strong>{props.modules.length} modules</strong> in the sample inventory</p></div></div>
-        <div className="admin-summary-item"><span className="admin-summary-icon"><Icon name="reports" /></span><div><h2>Execution review</h2><p>Browse recent runs and inspect sample results.</p></div></div>
-        <div className="admin-summary-item"><span className="admin-summary-icon"><Icon name="users" /></span><div><h2>Tester accounts</h2><p><strong>{props.testerCount} active testers</strong> in this demo workspace.</p><button className="text-button admin-manage-link" onClick={() => props.onNavigate('testers')}>Manage testers</button></div></div>
+        <div className="admin-summary-item"><span className="admin-summary-icon"><Icon name="layers" /></span><div><h2>System coverage</h2><p><strong>{props.modules.length} modules</strong> in the test inventory</p></div></div>
+        <div className="admin-summary-item"><span className="admin-summary-icon"><Icon name="reports" /></span><div><h2>Execution review</h2><p>Browse recent runs and inspect their results.</p></div></div>
+        <div className="admin-summary-item"><span className="admin-summary-icon"><Icon name="users" /></span><div><h2>Tester accounts</h2><p><strong>{props.testerCount} testers</strong> in this workspace.</p><button className="text-button admin-manage-link" onClick={() => props.onNavigate('testers')}>Manage testers</button></div></div>
       </section>
     </>
   );

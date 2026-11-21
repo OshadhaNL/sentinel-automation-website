@@ -3,6 +3,7 @@ import { useState } from 'react';
 export default function ModuleDistribution({ modules, total, onSelect }) {
   const [hovered, setHovered] = useState(null);
   let offset = 0;
+  const highlighted = modules.find((module) => module.name === hovered);
   const circumference = 2 * Math.PI * 80;
 
   return (
@@ -10,11 +11,11 @@ export default function ModuleDistribution({ modules, total, onSelect }) {
       <h2>Module Distribution ({total} Tests)</h2>
       <div className="distribution-body">
         <div className="donut-wrap">
-          <svg viewBox="0 0 220 220" role="img" aria-label={'Distribution of ' + total + ' sample tests across seven modules'}>
+          <svg viewBox="0 0 220 220" role="img" aria-label={'Distribution of ' + total + ' tests across modules'}>
             <title>Module distribution</title>
             <g transform="rotate(-90 110 110)">
               {modules.map((module) => {
-                const length = module.total / total * circumference;
+                const length = total ? module.total / total * circumference : 0;
                 const currentOffset = offset;
                 offset += length;
                 return <circle key={module.name} cx="110" cy="110" r="80" fill="none" stroke={module.color} strokeWidth="40"
@@ -27,8 +28,8 @@ export default function ModuleDistribution({ modules, total, onSelect }) {
             </g>
           </svg>
           <div className="donut-label" aria-hidden="true">
-            <strong>{hovered ? modules.find((module) => module.name === hovered).total : total}</strong>
-            <span>{hovered || 'Tests'}</span>
+            <strong>{highlighted ? highlighted.total : total}</strong>
+            <span>{highlighted ? highlighted.name : 'Tests'}</span>
           </div>
         </div>
         <ul className="chart-legend">

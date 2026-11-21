@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/layout/Header.jsx';
 import Sidebar from './components/layout/Sidebar.jsx';
 import Dashboard from './pages/tester/Dashboard.jsx';
@@ -7,106 +7,181 @@ import Login from './pages/auth/Login.jsx';
 import TesterManagement from './pages/admin/TesterManagement.jsx';
 import CreateTesterForm from './components/common/CreateTesterForm.jsx';
 import RunTestsForm from './components/common/RunTestsForm.jsx';
-import { getDemoTesters, createDemoTester } from './services/demoAuth.js';
 import Modal from './components/common/Modal.jsx';
 import Icon from './components/common/Icon.jsx';
-import StatusBadge from './components/common/StatusBadge.jsx';
 import ExecutionsTable from './components/tables/ExecutionsTable.jsx';
-import { modules, totals, executions, formatDate } from './data/dashboard.js';
+import TestCasesPanel from './components/tables/TestCasesPanel.jsx';
+import TestCaseDetails from './components/common/TestCaseDetails.jsx';
+import RunStatus from './components/common/RunStatus.jsx';
+import * as api from './services/api.js';
+
+const emptyFilters = { search: '', module: '', category: '', status: '', page: 1 };
+const emptyCases = { items: [], total: 0, pageSize: 20 };
 
 export default function App() {
   const [user, setUser] = useState(null);
-  const [testers, setTesters] = useState(getDemoTesters);
-  const [accountNotice, setAccountNotice] = useState('');
+  const [checkingSession, setCheckingSession] = useState(true);
+  const [data, setData] = useState(null);
+  const [testers, setTesters] = useState([]);
+  const [cases, setCases] = useState(emptyCases);
+  const [filters, setFilters] = useState(emptyFilters);
+  const [history, setHistory] = useState({ items: [], total: 0 });
+  const [historyPage, setHistoryPage] = useState(1);
   const [view, setView] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modal, setModal] = useState(null);
-  const selectedModule = modules.find((module) => module.name === view);
-  const runs = selectedModule ? executions.filter((run) => run.module === view) : executions;
-  const title = view === 'overview' ? (user?.role === 'admin' ? 'Admin Dashboard' : 'Dashboard') : view === 'all' ? 'All Systems' : view === 'reports' ? 'Reports' : view === 'testers' ? 'Tester Management' : view;
-  const subtitle = view === 'overview' ? 'Test automation overview'
-    : view === 'all' ? 'Test inventory across all modules'
-    : view === 'reports' ? 'Execution reports and results'
-    : view === 'testers' ? 'Manage your tester accounts'
-    : view + ' test automation overview';
+  const [error, setError] = useState('');
+  const [connectionError, setConnectionError] = useState('');
+  const [notice, setNotice] = useState('');
+  const [syncing, setSyncing] = useState(false);
 
-  function resetWorkspace() {
-    setView('overview');
-    setModal(null);
+  useEffect(() => {
+    api.getMe().then(setUser).catch(() => {}).finally(() => setCheckingSession(false));
+  }, []);
+
+  useEffect(() => {
+    if (user?.role === 'admin') api.getTesters().then(setTesters).catch((failure) => setError(failure.message));
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+    let alive = true;
+    let fetching = false;
+    async function refresh() {
+      if (fetching) return;
+      fetching = true;
+      try {
+        const dashboard = await api.getDashboard();
+        if (!alive) return;
+        setData(dashboard);
+        if (view === 'all' || dashboard.modules.some((module) => module.name === view)) {
+          const params = { ...filters, page_size: 20, module: view === 'all' ? filters.module : view };
+          const inventory = await api.getTests(params);
+          if (alive) setCases(inventory);
+        }
+        if (view === 'history' || view === 'reports') {
+          const runs = await api.getRuns(historyPage);
+          if (alive) setHistory(runs);
+        }
+        if (alive) setConnectionError('');
+      } catch (failure) {
+        if (alive) {
+          setConnectionError(failure.message);
+          if (failure.status === 401) setUser(null);
+        }
+      } finally { fetching = false; }
+    }
+    const initial = setTimeout(refresh, 200);
+    const polling = setInterval(refresh, 2000);
+    return () => { alive = false; clearTimeout(initial); clearInterval(polling); };
+  }, [user, view, filters, historyPage]);
+
+  function navigate(nextView) {
+    setView(nextView);
+    setFilters(emptyFilters);
+    setCases(emptyCases);
+    setHistoryPage(1);
     setSidebarOpen(false);
-    setAccountNotice('');
   }
 
-  if (!user) return <Login onLogin={(account) => { resetWorkspace(); setUser(account); }} />;
+  async function signOut() {
+    try {
+      await api.logout();
+      setUser(null);
+      setData(null);
+      setModal(null);
+      setTesters([]);
+      setNotice('');
+      setError('');
+      setConnectionError('');
+      navigate('overview');
+    } catch (failure) { setError(failure.message); }
+  }
 
-  const DashboardPage = user.role === 'admin' && view === 'overview' ? AdminDashboard : Dashboard;
+  async function synchronize() {
+    setSyncing(true);
+    setError('');
+    try {
+      const result = await api.discoverTests();
+      setNotice(result.count + ' tests synchronized. Existing history was preserved.');
+      setData(await api.getDashboard());
+      const inventory = await api.getTests({ ...filters, module: view === 'all' ? filters.module : data?.modules.some((module) => module.name === view) ? view : '' });
+      setCases(inventory);
+    } catch (failure) { setError(failure.message); }
+    finally { setSyncing(false); }
+  }
 
-  return (
-    <div className="app">
-      <Header user={user} onLogout={() => { resetWorkspace(); setUser(null); }} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-      <Sidebar user={user} view={view} onNavigate={setView} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <main id="main-content" className="main-content">
-        <div className="page-heading">
-          <div><h1>{title}</h1><p>{subtitle}</p></div>
-          <div className="page-heading-actions">
-            <span className="sample-label"><Icon name="sample" size={15} />Preview · Sample data</span>
-            {user.role === 'tester' && (selectedModule || view === 'all') && <button className="primary-button run-tests-button" onClick={() => setModal({ type: 'execute', module: selectedModule?.name })}><Icon name="play" size={17} />{selectedModule ? 'Run ' + selectedModule.name + ' Tests' : 'Run All Systems'}</button>}
-          </div>
+  async function openTest(id) {
+    try { setModal({ type: 'test', test: await api.getTest(id) }); }
+    catch (failure) { setError(failure.message); }
+  }
+
+  async function runTests(settings) {
+    const run = await api.startRun(settings);
+    setModal({ type: 'run', id: run.id });
+    setData(await api.getDashboard());
+  }
+
+  if (checkingSession) return <main className="connection-state">Checking your session…</main>;
+  if (!user) return <Login onLogin={(account) => { navigate('overview'); setError(''); setUser(account); }} />;
+
+  const modules = data?.modules || [];
+  const selectedModule = modules.find((module) => module.name === view);
+  const runs = selectedModule ? (data?.runs || []).filter((run) => run.modules.includes(view)) : data?.runs || [];
+  const isAdmin = user.role === 'admin';
+  const activeRun = data?.activeRun;
+  const busy = Boolean(data?.busy || activeRun);
+  const title = view === 'overview' ? (isAdmin ? 'Admin Dashboard' : 'Dashboard')
+    : view === 'all' ? 'All Systems' : view === 'reports' ? 'Reports'
+    : view === 'history' ? 'Execution History' : view === 'testers' ? 'Tester Management' : view;
+  const DashboardPage = isAdmin && view === 'overview' ? AdminDashboard : Dashboard;
+  const isInventoryView = view === 'all' || Boolean(selectedModule);
+
+  return <div className="app">
+    <Header user={user} onLogout={signOut} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+    <Sidebar user={user} modules={modules} view={view} onNavigate={navigate} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <main className="main-content">
+      <div className="page-heading">
+        <div><h1>{title}</h1><p>{isInventoryView ? 'Test inventory and latest results' : view === 'testers' ? 'Manage your tester accounts' : 'Test automation overview'}</p></div>
+        <div className="page-heading-actions">
+          {data?.provider === 'mock' && <span className="sample-label"><Icon name="sample" size={15} />Mock mode · Simulated executions</span>}
+          {view !== 'testers' && <button className="secondary-button" disabled={syncing || busy} onClick={synchronize}>{syncing ? 'Synchronizing…' : 'Sync Tests'}</button>}
+          {!isAdmin && isInventoryView && <button className="primary-button run-tests-button" disabled={busy || syncing} onClick={() => setModal({ type: 'execute', module: selectedModule?.name })}><Icon name="play" size={17} />{selectedModule ? 'Run ' + selectedModule.name + ' Tests' : 'Run All Systems'}</button>}
         </div>
-        {accountNotice && user.role === 'admin' && <div className="account-success" role="status"><Icon name="check" size={20} /><span>{accountNotice}</span><button className="icon-button" onClick={() => setAccountNotice('')} aria-label="Dismiss confirmation"><Icon name="close" size={18} /></button></div>}
-        {(view === 'overview' || selectedModule) && (
-          <DashboardPage stats={selectedModule || totals} modules={modules} runs={runs} selectedModule={selectedModule}
-            testerCount={testers.length} onCreateTester={() => setModal({ type: 'createTester' })}
-            onNavigate={setView} onViewAll={() => setModal({ type: 'history' })}
-            onSelectRun={(run) => setModal({ type: 'run', run })} />
-        )}
-        {view === 'testers' && user.role === 'admin' && <TesterManagement testers={testers} onCreate={() => setModal({ type: 'createTester' })} />}
-        {view === 'all' && (
-          <section className="panel inventory-panel">
-            <div className="panel-heading"><h2>Modules</h2><span className="muted">{totals.total} sample tests</span></div>
-            <div className="table-scroll" tabIndex={0} role="region" aria-label="Module inventory">
-              <table className="inventory-table">
-                <thead><tr><th>Module</th><th>Total Tests</th><th>Passed</th><th>Failed</th><th>Skipped</th><th>Not Executed</th>{user.role === 'tester' && <th>Action</th>}</tr></thead>
-                <tbody>{modules.map((module) => <tr key={module.name}>
-                  <td><button className="module-link" onClick={() => setView(module.name)}><Icon name={module.icon} size={20} />{module.name}</button></td>
-                  <td>{module.total}</td><td>{module.passed}</td><td>{module.failed}</td><td>{module.skipped}</td><td>{module.notExecuted}</td>
-                  {user.role === 'tester' && <td><button className="table-run-button" aria-label={'Run ' + module.name + ' Tests'} onClick={() => setModal({ type: 'execute', module: module.name })}><Icon name="play" size={15} />Run Tests</button></td>}
-                </tr>)}</tbody>
-              </table>
-            </div>
-          </section>
-        )}
-        {view === 'reports' && <section className="panel reports-panel">
-          <div className="panel-heading"><h2>Sample Executions</h2></div>
-          <p className="panel-note">Select a run to review its sample details. HTML and PDF reports will be available after backend integration.</p>
-          <ExecutionsTable runs={executions} onSelect={(run) => setModal({ type: 'run', run })} />
+      </div>
+      {(error || connectionError) && <p className="form-error" role="alert">{error || connectionError}</p>}
+      {notice && <div className="account-success" role="status"><Icon name="check" size={20} /><span>{notice}</span><button className="icon-button" aria-label="Dismiss confirmation" onClick={() => setNotice('')}><Icon name="close" size={18} /></button></div>}
+      {data?.warnings?.map((warning) => <p className="inventory-warning" key={warning}>{warning}</p>)}
+      {activeRun && <div className="execution-busy" role="status"><span>An execution is in progress. New requests will be rejected.</span><button className="text-button" onClick={() => setModal({ type: 'run', id: activeRun.id })}>View progress</button></div>}
+      {!data ? <p className="empty-state">Connecting to the backend…</p> : <>
+        {(view === 'overview' || selectedModule) && <DashboardPage stats={selectedModule || data.totals} modules={modules} runs={runs} selectedModule={selectedModule}
+          testerCount={testers.length} onCreateTester={() => setModal({ type: 'createTester' })} onNavigate={navigate}
+          onViewAll={() => navigate('history')} onSelectRun={(run) => setModal({ type: 'run', id: run.id })} />}
+        {view === 'all' && <section className="panel inventory-panel">
+          <div className="panel-heading"><h2>Modules</h2><span className="muted">{data.totals.total} discovered tests</span></div>
+          <div className="table-scroll" tabIndex={0} role="region" aria-label="Module inventory"><table className="inventory-table"><thead><tr><th>Module</th><th>Total Tests</th><th>Passed</th><th>Failed</th><th>Error</th><th>Skipped</th><th>Not Executed</th>{!isAdmin && <th>Action</th>}</tr></thead><tbody>
+            {modules.map((module) => <tr key={module.name}><td><button className="module-link" onClick={() => navigate(module.name)}><Icon name={module.icon} size={20} />{module.name}</button></td><td>{module.total}</td><td>{module.passed}</td><td>{module.failed}</td><td>{module.error}</td><td>{module.skipped}</td><td>{module.notExecuted}</td>{!isAdmin && <td><button className="table-run-button" disabled={busy || syncing} aria-label={'Run ' + module.name + ' Tests'} onClick={() => setModal({ type: 'execute', module: module.name })}><Icon name="play" size={15} />Run Tests</button></td>}</tr>)}
+          </tbody></table></div>
         </section>}
-      </main>
-      {modal?.type === 'execute' && user.role === 'tester' && <Modal title="Execute Tests" onClose={() => setModal(null)}><RunTestsForm moduleName={modal.module} onClose={() => setModal(null)} /></Modal>}
-      {modal?.type === 'createTester' && user.role === 'admin' && <Modal title="Create Tester" onClose={() => setModal(null)}><CreateTesterForm onCancel={() => setModal(null)} onCreate={async (details) => {
-        const tester = await createDemoTester(user, details);
-        setTesters(getDemoTesters());
-        setModal(null);
-        setView('testers');
-        setAccountNotice(tester.name + ' was created. They can now sign in to this demo.');
-      }} /></Modal>}
-      {modal?.type === 'history' && <Modal wide title={selectedModule ? selectedModule.name + ' Execution History' : 'Execution History'} onClose={() => setModal(null)}>
-        <p className="modal-note">Sample data only · Times are shown in your local timezone.</p>
-        <ExecutionsTable runs={runs} onSelect={(run) => setModal({ type: 'run', run })} />
-      </Modal>}
-      {modal?.type === 'run' && <Modal title={modal.run.id} onClose={() => setModal(null)}>
-        <p className="modal-note">Sample execution · This test run was not executed.</p>
-        <dl className="run-details">
-          <div><dt>Execution</dt><dd>{modal.run.module} – {modal.run.scope}</dd></div>
-          <div><dt>Run status</dt><dd>Completed</dd></div>
-          <div><dt>Test outcome</dt><dd><StatusBadge status={modal.run.result} /></dd></div>
-          <div><dt>Executed by</dt><dd>{modal.run.tester}</dd></div>
-          <div><dt>Executed on</dt><dd>{formatDate(modal.run.executedAt)}</dd></div>
-          <div><dt>Duration</dt><dd>{modal.run.duration}</dd></div>
-          <div><dt>Browser mode</dt><dd>{modal.run.mode}</dd></div>
-        </dl>
-        <p className="report-notice"><Icon name="reports" size={19} />Reports will be available after backend integration.</p>
-      </Modal>}
-    </div>
-  );
+        {isInventoryView && <TestCasesPanel data={cases} filters={filters} modules={modules} moduleName={selectedModule?.name} user={user} busy={busy || syncing}
+          onFilter={(name, value) => setFilters({ ...filters, [name]: value, page: name === 'page' ? value : 1 })}
+          onDetails={openTest} onRun={(test) => setModal({ type: 'execute', module: test.module, test })} />}
+        {view === 'testers' && isAdmin && <TesterManagement testers={testers} onCreate={() => setModal({ type: 'createTester' })} />}
+        {(view === 'reports' || view === 'history') && <section className="panel reports-panel"><div className="panel-heading"><h2>{view === 'reports' ? 'Execution Reports' : 'Executions'}</h2></div><p className="panel-note">Select a run for its results and HTML/PDF reports. Run status is separate from individual test outcomes.</p>
+          <ExecutionsTable runs={history.items} onSelect={(run) => setModal({ type: 'run', id: run.id })} />
+          <div className="pagination"><button className="secondary-button" disabled={historyPage === 1} onClick={() => setHistoryPage(historyPage - 1)}>Previous</button><span>Page {historyPage}</span><button className="secondary-button" disabled={historyPage * 30 >= history.total} onClick={() => setHistoryPage(historyPage + 1)}>Next</button></div>
+        </section>}
+      </>}
+    </main>
+    {modal?.type === 'execute' && !isAdmin && <Modal key="execute" title="Execute Tests" onClose={() => setModal(null)}><RunTestsForm modules={modules} moduleName={modal.module} testCase={modal.test} isMock={data?.provider === 'mock'} onRun={runTests} onClose={() => setModal(null)} /></Modal>}
+    {modal?.type === 'run' && <Modal key="run" wide title="Execution Details" onClose={() => setModal(null)}><RunStatus runId={modal.id} /></Modal>}
+    {modal?.type === 'test' && <Modal key="test" wide title="Test Case Details" onClose={() => setModal(null)}><TestCaseDetails test={modal.test} /></Modal>}
+    {modal?.type === 'createTester' && isAdmin && <Modal key="createTester" title="Create Tester" onClose={() => setModal(null)}><CreateTesterForm onCancel={() => setModal(null)} onCreate={async (details) => {
+      const tester = await api.createTester(details);
+      setTesters(await api.getTesters());
+      setModal(null);
+      navigate('testers');
+      setNotice(tester.name + ' was created and can now sign in.');
+    }} /></Modal>}
+  </div>;
 }

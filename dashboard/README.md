@@ -1,64 +1,45 @@
 # Sentinel Automation Dashboard
 
-Frontend dashboard built with React, Vite, JavaScript, and CSS. The backend is reserved for a later implementation.
+React + Vite + JavaScript frontend, FastAPI backend, SQLAlchemy, and PostgreSQL.
 
-## Run the frontend
+Start with the [backend setup guide](backend/README.md) to create the database, configure [.env.example](.env.example), provision initial accounts, install dependencies, and start the API.
 
-Install a current Node.js LTS release, then run from this project directory:
+Then, from [frontend](frontend):
 
 ```powershell
-cd frontend
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite.
+Vite proxies API requests to FastAPI on port 8000. Restart Vite if it was running before the backend proxy was configured.
 
-## Production build
+## Features
+
+- Database-backed admin and tester accounts, sign in/out, and persisted sessions.
+- Admins create/view testers and review test statistics/history/reports; execution endpoints reject admin requests.
+- Automatic pytest discovery before each run, stable test codes, parametrized identity, metadata updates, inactive removed tests, and preserved complete history.
+- Test inventory with search/filter/pagination, execution counts, latest three outcomes, and latest four on test details.
+- All Systems, module, and individual-test execution scopes; All Tests/Happy Path, Headed/Headless, and camera filters.
+- Exactly one active execution; overlapping requests are rejected, not queued.
+- Polling about every two seconds for progress and results.
+- All selected tests receive one result per run, including Not Executed for unfinished selections. Statistics and execution counts are calculated from saved results.
+- Protected HTML/PDF reports, including clearly labeled simulated reports in mock mode.
+- Separate mock and pytest providers. Browser-only credential checks and sample dashboard counters have been removed.
+
+## Verification
+
+From [backend](backend):
 
 ```powershell
-cd frontend
-npm run build
-npm run preview
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
-## Current scope
+From [frontend](frontend):
 
-- Responsive dashboard matching the supplied pink and neutral visual reference.
-- Result summary cards, module distribution chart, and recent executions.
-- Sidebar module summaries and All Systems inventory.
-- Tester-only Run Tests controls on every module. Run All Systems selects all seven modules in one execution. Settings include Headed/Headless and All Tests/Happy Path (positive tests). Onboarding and All Systems also show camera options: exclude, include, or real-camera tests only. Camera-only selection filters the chosen scope to tests tagged for a real camera.
-- Submitting execution settings displays a UI-only confirmation; it does not start tests, change statistics, or record execution results.
-- Execution history and sample execution detail dialogs.
-- Notification and tester profile popovers.
-- All displayed inventory and execution records are explicitly labeled sample data.
-- Login page with a frontend-only admin demo account and a tester preview.
-- Admin dashboard with read-only test statistics, module coverage, and execution review.
-- Admin-only tester management: create tester accounts, search and view profiles, and sign in as a created tester.
-- Account menu with role, identity, and sign out. Reloading ends the demo session.
-- No live authentication, actual test execution, or report generation is connected yet.
+```powershell
+npm run build
+```
 
-## Demo login
+Automated backend tests use isolated temporary SQLite databases. The application's normal runtime requires PostgreSQL; there is no automatic SQLite fallback.
 
-| Role | Email | Password |
-| --- | --- | --- |
-| Admin | `admin@northlark.com` | `password123` |
-| Tester | `tester@northlark.com` | `password123` |
-
-The built-in tester is listed in admin tester management and remains available after reload. Accounts created through the form are cleared on reload.
-
-These are public frontend demo credentials, checked in [demoAuth.js](frontend/src/services/demoAuth.js). They are not a provisioned database account or secure authentication. No password or session is saved to browser storage. Replace the demo adapter with backend authentication and password hashing before real deployment.
-
-Admins can select **Create Tester** on their dashboard or open **Testers** in the sidebar. The form requires a name, unique email, password of at least eight characters, and password confirmation. Tester roles are fixed. Created testers can sign in after the admin signs out, in the same tab. Accounts survive sign out but are cleared on page reload. Tester passwords are salted and hashed in memory with Web Crypto; profiles never expose passwords or hashes. Only demo credentials should be used until the backend is connected.
-
-Use **Explore tester preview** on the login page to view the existing tester dashboard.
-
-Sample data lives in [frontend/src/data/dashboard.js](frontend/src/data/dashboard.js).
-Colour tokens live in [frontend/src/styles/global.css](frontend/src/styles/global.css).
-The reference module counts sum to 321; the sample Screening count is 35 so the inventory totals 324.
-
-The existing automation project is unchanged. Future FastAPI integration will replace the frontend fixtures with authenticated API responses.
-
-## Build compatibility
-
-Rollup uses its official WebAssembly package because this Windows machine blocks the native Rollup binary through Application Control. The package alias and override are recorded in the frontend package manifest and lockfile.
+The real automation framework is in [../testing](../testing). The backend loads its pytest integration externally without changing those source files. Discovery is verified independently of execution; camera and positive/negative classifications must be reviewed before enabling filtered real runs. See [the classification guide](backend/README.md#classifications).

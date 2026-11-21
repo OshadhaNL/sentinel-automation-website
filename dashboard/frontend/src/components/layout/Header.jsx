@@ -36,7 +36,7 @@ export default function Header({ onToggleSidebar, user, onLogout }) {
             onClick={() => setOpen(open === 'profile' ? null : 'profile')}>
             <span className="avatar">{user.initials}</span><Icon name="chevronDown" size={20} />
           </button>
-          {open === 'profile' && <section className="header-popover profile-popover"><h2>{user.name}</h2><p>{user.email || 'Tester preview'}</p><small>Demo session · {user.role === 'admin' ? 'Administrator' : 'Tester'}</small><button className="sign-out-button" onClick={onLogout}><Icon name="logout" size={18} />Sign out</button></section>}
+          {open === 'profile' && <section className="header-popover profile-popover"><h2>{user.name}</h2><p>{user.email}</p><small>{user.role === 'admin' ? 'Administrator' : 'Tester'}</small><button className="sign-out-button" onClick={onLogout}><Icon name="logout" size={18} />Sign out</button></section>}
         </div>
       </div>
     </header>
