@@ -1,0 +1,28 @@
+import Icon from '../common/Icon.jsx';
+
+export default function Sidebar({ view, onNavigate, open, onClose, user, modules = [] }) {
+  const links = [
+    ...(user.role === 'admin' ? [{ id: 'testers', label: 'Tester Management', icon: 'users' }, { id: 'audit', label: 'Security Audit', icon: 'shield' }] : []),
+    { id: 'overview', label: user.role === 'admin' ? 'Test Overview' : 'Dashboard', icon: 'home' },
+    { id: 'all', label: 'All Systems', icon: 'layers' },
+    ...modules.map((module) => ({ id: module.name, label: module.name, icon: module.icon })),
+    { id: 'reports', label: 'Reports', icon: 'reports' },
+    { id: 'history', label: 'Executions', icon: 'clock' },
+  ];
+  return (
+    <>
+      {open && <button className="sidebar-backdrop" aria-label="Close navigation" onClick={onClose} />}
+      <aside className={'sidebar' + (open ? ' sidebar-open' : '')}>
+        <nav aria-label="Main navigation">
+          {links.map((link) => (
+            <button key={link.id} className={'nav-item' + (view === link.id ? ' active' : '')}
+              aria-current={view === link.id ? 'page' : undefined}
+              onClick={() => { onNavigate(link.id); onClose(); }}>
+              <Icon name={link.icon} size={25} /><span>{link.label}</span>
+            </button>
+          ))}
+        </nav>
+      </aside>
+    </>
+  );
+}
