@@ -7,7 +7,7 @@ from app.core.security import verify_password
 from app.models import TestCase, TestResult, TestRun, User
 from app.services.discovery import sync_inventory
 from app.services.runner import phase_result
-from conftest import login
+from conftest import login, invitation_token, TEST_PASSWORD
 
 
 def wait_run(client, run_id):
@@ -37,21 +37,22 @@ def test_auth_roles_and_protected_downloads(api):
     assert client.post('/api/auth/login', json=dict(email='admin@northlark.com', password='wrong')).status_code == 401
     login(client, 'admin')
     assert client.post('/api/runs', json={'scope_type': 'all'}).status_code == 403
-    created = client.post('/api/testers', json={'name': 'QA Person', 'email': ' QA@NORTHLARK.COM ', 'password': 'qa-password'})
+    created = client.post('/api/testers', json={'name': 'QA Person', 'email': ' QA@NORTHLARK.COM '})
     assert created.status_code == 201
     assert created.json()['role'] == 'tester'
     assert 'password' not in created.text
-    assert client.post('/api/testers', json={'name': 'Duplicate', 'email': 'qa@northlark.com', 'password': 'qa-password'}).status_code == 409
+    assert client.post('/api/testers', json={'name': 'Duplicate', 'email': 'qa@northlark.com'}).status_code == 409
     assert client.post('/api/testers', json={'name': 'Injected', 'email': 'bad@example.com', 'password': 'qa-password', 'role': 'admin'}).status_code == 422
+    assert client.post('/api/auth/invitations/accept', json={'token': invitation_token(app), 'password': TEST_PASSWORD}).status_code == 200
     with app.state.sessions() as db:
         tester = db.scalar(select(User).where(User.email == 'qa@northlark.com'))
-        assert verify_password('qa-password', tester.password_hash)
-        assert tester.password_hash != 'qa-password'
+        assert verify_password(TEST_PASSWORD, tester.password_hash)
+        assert tester.password_hash != TEST_PASSWORD
     assert client.post('/api/auth/logout').status_code == 204
     assert client.get('/api/auth/me').status_code == 401
-    assert client.post('/api/auth/login', json={'email': 'qa@northlark.com', 'password': 'qa-password'}).status_code == 200
+    assert client.post('/api/auth/login', json={'email': 'qa@northlark.com', 'password': TEST_PASSWORD}).status_code == 200
     assert client.get('/api/testers').status_code == 403
-    assert client.post('/api/testers', json={'name': 'No Access', 'email': 'no@example.com', 'password': 'qa-password'}).status_code == 403
+    assert client.post('/api/testers', json={'name': 'No Access', 'email': 'no@northlark.com'}).status_code == 403
     assert client.post('/api/auth/logout', headers={'Origin': 'https://untrusted.example'}).status_code == 403
 
 

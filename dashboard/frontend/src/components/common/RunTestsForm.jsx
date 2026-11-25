@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Icon from './Icon.jsx';
 import { previewRun } from '../../services/api.js';
+import { browsers } from '../../data/browsers.js';
 
 export default function RunTestsForm({ moduleName, testCase, modules, isMock, onRun, onClose }) {
   const allSystems = !moduleName;
@@ -8,6 +9,7 @@ export default function RunTestsForm({ moduleName, testCase, modules, isMock, on
   const showCameraOptions = allSystems || module === 'Onboarding';
   const [scope, setScope] = useState('All Tests');
   const [browserMode, setBrowserMode] = useState('Headless');
+  const [selectedBrowsers, setSelectedBrowsers] = useState(['chromium']);
   const [workers, setWorkers] = useState(1);
   const [cameraMode, setCameraMode] = useState('Exclude real camera');
   const [submitting, setSubmitting] = useState(false);
@@ -15,10 +17,26 @@ export default function RunTestsForm({ moduleName, testCase, modules, isMock, on
   const [recommendation, setRecommendation] = useState(null);
   const [previewError, setPreviewError] = useState('');
 
-  const scopeType = testCase ? 'test' : allSystems ? 'all' : 'module';
-  const scopeValue = testCase ? testCase.code : allSystems ? null : module;
+  let scopeType = 'module';
+  let scopeValue = module;
+  if (testCase) {
+    scopeType = 'test';
+    scopeValue = testCase.code;
+  } else if (allSystems) {
+    scopeType = 'all';
+    scopeValue = null;
+  }
+
+  const cameraModes = {
+    'Exclude real camera': 'exclude',
+    'Include real camera': 'include',
+    'Real camera tests only': 'only',
+  };
   const selection = !testCase && scope === 'Happy Path' ? 'positive' : 'all';
-  const camera = showCameraOptions ? { 'Exclude real camera': 'exclude', 'Include real camera': 'include', 'Real camera tests only': 'only' }[cameraMode] : 'exclude';
+  const camera = showCameraOptions ? cameraModes[cameraMode] : 'exclude';
+  let scopeLabel = module;
+  if (testCase) scopeLabel = `${testCase.code} · ${testCase.name}`;
+  else if (allSystems) scopeLabel = `All Systems (${modules.length} modules)`;
 
   useEffect(() => {
     let alive = true;
@@ -33,6 +51,10 @@ export default function RunTestsForm({ moduleName, testCase, modules, isMock, on
   async function submit(event) {
     event.preventDefault();
     if (submitting) return;
+    if (!selectedBrowsers.length) {
+      setError('Select at least one browser.');
+      return;
+    }
     setSubmitting(true);
     setError('');
     try {
@@ -41,17 +63,25 @@ export default function RunTestsForm({ moduleName, testCase, modules, isMock, on
         scope_value: scopeValue,
         selection,
         browser_mode: browserMode.toLowerCase(),
+        browsers: selectedBrowsers,
         workers: Number(workers),
         camera_mode: camera,
       });
     } catch (failure) { setError(failure.message); setSubmitting(false); }
   }
 
+  function toggleBrowser(value) {
+    setError('');
+    setSelectedBrowsers((selected) => selected.includes(value)
+      ? selected.filter((browser) => browser !== value)
+      : [...selected, value]);
+  }
+
   return (
     <form className="run-tests-form" onSubmit={submit} aria-busy={submitting}>
       <div className="form-field">
         <label htmlFor="execution-module">Execution scope</label>
-        <input id="execution-module" className="execution-module-name" value={testCase ? testCase.code + ' · ' + testCase.name : allSystems ? 'All Systems (' + modules.length + ' modules)' : module} readOnly />
+        <input id="execution-module" className="execution-module-name" value={scopeLabel} readOnly />
         {allSystems && <p className="field-help">One run across {modules.map((item) => item.name).join(', ')}.</p>}
       </div>
       <fieldset className="execution-options" disabled={submitting || Boolean(testCase)}>
@@ -69,6 +99,18 @@ export default function RunTestsForm({ moduleName, testCase, modules, isMock, on
           <label><input type="radio" name="browserMode" value="Headless" checked={browserMode === 'Headless'} onChange={(event) => setBrowserMode(event.target.value)} />Headless</label>
         </div>
       </fieldset>
+      <fieldset className="execution-options" disabled={submitting}>
+        <legend>Browsers</legend>
+        <div className="execution-options-row browser-options">
+          {browsers.map((browser) => <label key={browser.value}>
+            <input type="checkbox" name="browsers" value={browser.value}
+              checked={selectedBrowsers.includes(browser.value)} onChange={() => toggleBrowser(browser.value)} />
+            {browser.label}
+          </label>)}
+        </div>
+        <p className="field-help">Select one or more. Browsers run one after another, each with separate results and reports. Each browser adds one execution per selected test.</p>
+        <p className="field-help">Chrome and Edge must be installed on the execution PC. WebKit is a browser engine, not the Safari application.</p>
+      </fieldset>
       <div className="form-field">
         <label htmlFor="execution-workers">Workers</label>
         <input id="execution-workers" type="number" min="1" max="32" step="1" required value={workers} onChange={(event) => setWorkers(event.target.value)} disabled={submitting} aria-describedby="worker-tip" />
@@ -77,6 +119,7 @@ export default function RunTestsForm({ moduleName, testCase, modules, isMock, on
           {recommendation ? <>
             <strong>{recommendation.selectedCount} selected tests: try {recommendation.recommendedWorkers} {recommendation.recommendedWorkers === 1 ? 'worker' : 'workers'}.</strong>
             <p>{recommendation.reason} Based on the synced inventory.</p>
+            <p>{recommendation.selectedCount * selectedBrowsers.length} total test executions across {selectedBrowsers.length} selected {selectedBrowsers.length === 1 ? 'browser' : 'browsers'}. Workers apply within each browser run.</p>
             <button type="button" className="text-button" disabled={submitting || Number(workers) === recommendation.recommendedWorkers} onClick={() => setWorkers(recommendation.recommendedWorkers)}>Use recommendation</button>
           </> : <p>{previewError || 'Checking selected tests...'}</p>}
         </div>

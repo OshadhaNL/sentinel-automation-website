@@ -6,8 +6,8 @@ export default function AdminDashboard(props) {
     <>
       <div className="admin-access-note">
         <span className="admin-access-icon"><Icon name="shield" size={22} /></span>
-        <div><strong>Administrator workspace</strong><p>Review test coverage, execution history, and reports across all modules.</p></div>
-        <button className="primary-button admin-create-tester" onClick={props.onCreateTester}><Icon name="userPlus" size={18} />Create Tester</button>
+        <div><strong>Tester administration</strong><p>Manage tester accounts, welcome emails, and access from Tester Management.</p></div>
+        <button className="primary-button admin-create-tester" onClick={() => props.onNavigate('testers')}><Icon name="users" size={18} />Manage Testers</button>
       </div>
       <Dashboard {...props} />
       <section className="panel admin-summary-panel" aria-label="Administration overview">

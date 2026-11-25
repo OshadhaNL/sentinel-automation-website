@@ -7,6 +7,8 @@ from fastapi import Depends, HTTPException, Request
 from app.db.database import get_db, utc, utcnow
 from app.models import LoginSession, User
 
+ADMIN_EMAIL = 'admin@northlark.com'
+
 
 def hash_password(password):
     salt = secrets.token_hex(16)
@@ -30,9 +32,10 @@ def token_hash(token):
 
 
 def user_profile(user):
-    return dict(id=user.id, name=user.name, email=user.email, role=user.role,
+    return dict(id=user.id, name=user.name, email=user.email, designation=user.designation, role=user.role,
                 initials=''.join(word[0] for word in user.name.split()[:2]).upper(),
-                createdAt=utc(user.created_at).isoformat(), isActive=user.is_active)
+                createdAt=utc(user.created_at).isoformat(), isActive=user.is_active,
+                mustChangePassword=user.must_change_password, invitationPending=user.invited and not user.email_verified_at)
 
 
 def current_user(request: Request, db=Depends(get_db)):
@@ -43,6 +46,12 @@ def current_user(request: Request, db=Depends(get_db)):
     user = db.get(User, session.user_id)
     if not user or not user.is_active:
         raise HTTPException(401, 'Account is inactive.')
+    if user.role == 'admin' and user.email != ADMIN_EMAIL:
+        raise HTTPException(403, 'This account is not authorised as an administrator.')
+    allowed = {'/api/auth/me', '/api/auth/logout', '/api/auth/password'}
+    if request.url.path not in allowed:
+        if user.must_change_password:
+            raise HTTPException(403, 'Change your password before continuing.')
     return user
 
 

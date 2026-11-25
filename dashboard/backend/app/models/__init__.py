@@ -14,11 +14,21 @@ class User(Base):
     __tablename__ = 'users'
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     name: Mapped[str] = mapped_column(String(100))
+    designation: Mapped[str] = mapped_column(String(100), default='', server_default='')
     email: Mapped[str] = mapped_column(String(254), unique=True)
     password_hash: Mapped[str] = mapped_column(Text)
     role: Mapped[str] = mapped_column(String(10))
     created_at: Mapped[object] = mapped_column(DateTime(timezone=True), default=utcnow)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    must_change_password: Mapped[bool] = mapped_column(Boolean, default=False, server_default='false')
+    invited: Mapped[bool] = mapped_column(Boolean, default=False, server_default='false')
+    email_verified_at: Mapped[object | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # Legacy MFA columns are retained for existing databases; authentication no longer uses them.
+    mfa_secret: Mapped[str | None] = mapped_column(Text, nullable=True)
+    mfa_pending_secret: Mapped[str | None] = mapped_column(Text, nullable=True)
+    mfa_pending_expires: Mapped[object | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    mfa_last_step: Mapped[int] = mapped_column(Integer, default=-1, server_default='-1')
+    recovery_hashes: Mapped[list] = mapped_column(JSON, default=list, server_default='[]')
 
 
 class LoginSession(Base):
@@ -26,6 +36,24 @@ class LoginSession(Base):
     token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
     user_id: Mapped[str] = mapped_column(ForeignKey('users.id'), index=True)
     expires_at: Mapped[object] = mapped_column(DateTime(timezone=True))
+    mfa_verified: Mapped[bool] = mapped_column(Boolean, default=False, server_default='false')
+
+
+class Invitation(Base):
+    __tablename__ = 'invitations'
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey('users.id'), index=True)
+    expires_at: Mapped[object] = mapped_column(DateTime(timezone=True))
+    used_at: Mapped[object | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class AuditEvent(Base):
+    __tablename__ = 'audit_events'
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    actor_id: Mapped[str | None] = mapped_column(ForeignKey('users.id'), nullable=True)
+    target_id: Mapped[str | None] = mapped_column(ForeignKey('users.id'), nullable=True)
+    action: Mapped[str] = mapped_column(String(80))
+    created_at: Mapped[object] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
 
 
 class TestCase(Base):
@@ -50,6 +78,8 @@ class TestRun(Base):
     scope_value: Mapped[str | None] = mapped_column(String(100), nullable=True)
     selection: Mapped[str] = mapped_column(String(20))
     browser_mode: Mapped[str] = mapped_column(String(20))
+    browser: Mapped[str] = mapped_column(String(20), default='chromium', server_default='chromium')
+    batch_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
     camera_mode: Mapped[str] = mapped_column(String(20))
     workers: Mapped[int] = mapped_column(Integer, default=1, server_default='1')
     status: Mapped[str] = mapped_column(String(25), index=True, default='Pending')

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Icon from '../../components/common/Icon.jsx';
 import { login } from '../../services/api.js';
+import { version as appVersion } from '../../../package.json';
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -14,57 +15,49 @@ export default function Login({ onLogin }) {
     if (submitting) return;
     setSubmitting(true);
     setError('');
-    try {
-      onLogin(await login(email, password));
-    } catch (failure) {
-      setError(failure.message);
-    } finally {
-      setSubmitting(false);
-    }
+    try { onLogin(await login(email, password)); }
+    catch (failure) { setError(failure.message); }
+    finally { setSubmitting(false); }
   }
 
-  return (
-    <main className="login-page">
-      <section className="login-brand-panel" aria-label="Sentinel Automation">
-        <div className="login-brand"><Icon name="shield" size={38} /><span>Sentinel<span className="login-brand-caption">AUTOMATION DASHBOARD</span></span></div>
-        <div className="login-intro">
-          <span className="login-eyebrow">QUALITY. CLARITY. CONFIDENCE.</span>
-          <h1>Your tests.<br />One clear view.</h1>
-          <p>Keep track of test coverage, review executions, and turn results into a clearer picture of quality.</p>
-          <div className="login-feature"><Icon name="layers" size={22} /><span>Every module, connected.</span></div>
-          <div className="login-feature"><Icon name="reports" size={22} /><span>Results you can act on.</span></div>
-        </div>
-        <span className="login-brand-footer">Sentinel Automation · Northlark</span>
-        <Icon name="shield" size={390} className="login-watermark" />
-      </section>
-      <section className="login-form-panel" aria-label="Sign in">
-        <div className="login-card">
-          <span className="login-mark"><Icon name="shield" size={29} /></span>
-          <h2>Welcome back</h2>
-          <p className="login-description">Sign in to your Sentinel workspace.</p>
-          <form onSubmit={handleSubmit} className="login-form">
-            <div className="form-field">
-              <label htmlFor="email">Email address</label>
-              <input id="email" name="email" type="email" autoComplete="username" placeholder="you@northlark.com" required
-                value={email} onChange={(event) => { setEmail(event.target.value); setError(''); }} aria-describedby={error ? 'login-error' : undefined} aria-invalid={Boolean(error)} />
+  return <main className="simple-login-page">
+    <section className="simple-login-card" aria-labelledby="login-title">
+      <header className="simple-login-header">
+        <div className="simple-login-wordmark"><span className="simple-login-logo"><Icon name="shield" size={25} /></span><div>Northlark<span>Sentinel Automation</span></div></div>
+      </header>
+      <div className="simple-login-content">
+        <div className="simple-login-form-panel">
+        <div className="simple-login-intro"><h1 id="login-title">Sign in</h1><p>Access your testing workspace.</p></div>
+        <form onSubmit={handleSubmit} className="simple-login-form" aria-label="Sign in">
+          <div className="form-field">
+            <label htmlFor="email">Email address</label>
+            <input id="email" name="email" type="email" autoComplete="username" placeholder="you@northlark.com" required
+              value={email} onChange={(event) => { setEmail(event.target.value); setError(''); }}
+              aria-describedby={error ? 'login-error' : undefined} aria-invalid={Boolean(error)} />
+          </div>
+          <div className="form-field">
+            <label htmlFor="password">Password</label>
+            <div className="password-field">
+              <input id="password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required
+                value={password} onChange={(event) => { setPassword(event.target.value); setError(''); }}
+                aria-describedby={error ? 'login-error' : undefined} aria-invalid={Boolean(error)} />
+              <button type="button" className="password-toggle" aria-label={showPassword ? 'Hide password' : 'Show password'} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>
+                <Icon name={showPassword ? 'eyeOff' : 'eye'} size={19} />
+              </button>
             </div>
-            <div className="form-field">
-              <label htmlFor="password">Password</label>
-              <div className="password-field">
-                <input id="password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Enter your password" required
-                  value={password} onChange={(event) => { setPassword(event.target.value); setError(''); }} aria-describedby={error ? 'login-error' : undefined} aria-invalid={Boolean(error)} />
-                <button type="button" className="password-toggle" aria-label={showPassword ? 'Hide password' : 'Show password'} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>
-                  <Icon name={showPassword ? 'eyeOff' : 'eye'} size={20} />
-                </button>
-              </div>
-            </div>
-            {error && <p id="login-error" className="form-error" role="alert"><Icon name="alert" size={18} />{error}</p>}
-            <button className="primary-button login-submit" type="submit" disabled={submitting}>{submitting ? 'Signing in…' : 'Sign in'}</button>
-          </form>
-          <div className="login-demo-note"><Icon name="shield" size={18} /><p><strong>Your Sentinel account</strong>Sign in with your admin or tester account. Contact your administrator if you need access.</p></div>
+          </div>
+          {error && <p id="login-error" className="form-error" role="alert">{error}</p>}
+          <button className="primary-button simple-login-submit" type="submit" disabled={submitting}><span>{submitting ? 'Signing in...' : 'Sign in'}</span>{!submitting && <Icon name="chevronRight" size={19} />}</button>
+        </form>
         </div>
-        <p className="login-footer">Sentinel Automation Dashboard</p>
-      </section>
-    </main>
-  );
+        <div className="simple-login-brand">
+          <span className="simple-login-product-mark"><Icon name="shield" size={48} /></span>
+          <h2>Sentinel</h2>
+          <p>Test Automation Framework</p>
+          <span className="simple-login-stack">Python + Playwright</span>
+        </div>
+      </div>
+      <footer className="simple-login-footer"><span>© {new Date().getFullYear()} Northlark</span><span className="simple-login-version">Version {appVersion}</span></footer>
+    </section>
+  </main>;
 }

@@ -8,6 +8,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.api.routes.api import router
+from app.api.routes.accounts import router as accounts_router
 from app.core.config import Settings
 from app.core.security import hash_password
 from app.db.database import Base, make_database
@@ -71,6 +72,7 @@ def create_app(settings=None):
         return {'status': 'ok', 'provider': settings.executor}
 
     app.include_router(router)
+    app.include_router(accounts_router)
     return app
 
 

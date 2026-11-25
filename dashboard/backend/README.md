@@ -53,6 +53,45 @@ The run dialog previews the selected count from the synced inventory using the s
 
 Both discovery and real execution import the automation test modules. Test collection does not run test bodies, but ordinary Python import side effects can still occur. Collection has a 120-second timeout; execution has a one-hour timeout. Pytest exit code 1 can represent completed tests with failures, so it does not imply a failed-to-start run.
 
+## Browser selection
+
+The Execute Tests dialog accepts one or more browsers: Chromium (the existing
+default), Google Chrome, Microsoft Edge, and WebKit. It applies Headed/Headless,
+test selection, camera filtering, and the selected worker count to each browser.
+
+Browsers in one request run sequentially under the same execution lock. Each
+browser has its own run, outcomes, and HTML/PDF reports. The execution-details
+dialog lets you switch between these runs. Other run/discovery requests remain
+blocked until all selected browsers finish. A failed browser does not prevent
+the remaining selected browsers from running.
+
+Every browser run adds one recorded execution per selected test, including
+Failed, Skipped, Error, and Not Executed. For example, 10 tests on three browsers
+produce 30 result records. Test identities remain stable across browsers;
+pytest's original Chromium parameter IDs remain inventory keys while the
+runtime browser fixture uses the selected engine. Browser names are stored on
+the run and shown next to results. Pending results still do not count.
+
+Chrome and Edge must be installed on the execution PC. For the bundled
+Chromium and WebKit engines, use the automation environment:
+
+```powershell
+.\testing\.venv\Scripts\python.exe -m playwright install chromium webkit
+```
+
+Run that command from the repository root. WebKit is Playwright's WebKit build,
+not the Safari application. Camera permissions and other features differ by
+engine; verify real-camera tests on each chosen browser. Tests must use the
+standard pytest-playwright fixtures; browser choices cannot override a test
+that manually launches a hard-coded browser.
+
+The API accepts `browsers: ["chrome", "edge", "webkit"]` on `POST /api/runs`.
+An omitted list preserves Chromium as the default. Empty, duplicate, and
+unsupported browser lists are rejected. Startup adds browser/batch columns
+without deleting existing runs; older runs are labelled Chromium. Restart the
+backend after updating. Mock mode simulates each browser run without launching
+real browsers.
+
 ## Classifications
 
 Collection preserves each complete pytest node ID, including parameter identity. Modules are mapped from the existing test file organization. New tests are added automatically with a stable `TC-...` dashboard code; existing node IDs retain their code and complete history. Renaming/moving a test changes its node ID and currently creates a new inventory entry.
@@ -91,6 +130,68 @@ Real camera execution additionally requires `REAL_CAMERA_AVAILABLE=1`, set only 
 ## Authentication and reports
 
 Accounts use salted PBKDF2 password hashes. Authentication uses opaque, hashed, revocable database sessions and an HTTP-only SameSite cookie. Admin-only and tester-only endpoints enforce roles server-side. No public registration exists. Cookie sessions survive page reloads and backend restarts until expiration or logout.
+
+### Invitations and account security
+
+The admin UI now uses **manual Outlook welcome emails**. Enter the tester's name, company email, and designation, then select **Create account & preview email**. The backend creates an active tester with a random temporary password and returns an editable subject/body preview. **Send via Outlook** opens Outlook Web with the recipient, subject, and body; the admin must click Send in Outlook. A default-email-app link is also available. This flow needs no SMTP, Graph credentials, or extra service. It uses the Outlook account the admin is signed into and cannot confirm delivery. Email content is plain text with a sign-in URL, not an HTML login button.
+
+The temporary password is hashed in the database and shown only in that preview. The tester must change it before accessing the dashboard. Closing the preview does not undo account creation. **Prepare welcome email** generates a replacement password for an account awaiting its first password change; it revokes old sessions and invalidates the previous password and invitation links. No plaintext password or email body is saved in audit history. The account's designation is saved and shown in the tester list. The application does not treat a manual email draft as proof of email ownership or delivery.
+
+Set `PUBLIC_APP_URL` to the dashboard URL recipients can reach. Loopback URLs only work on the same computer. The manual UI uses `POST /api/testers/outlook-draft` and `POST /api/testers/{id}/outlook-draft`; direct automated invitation APIs below remain available separately.
+
+- Admins invite testers using their name and company email. The account stays inactive until the tester accepts a single-use, 24-hour link and sets their own password. Tokens are stored only as SHA-256 hashes in the database. Resending or revoking an invitation invalidates the previous link.
+- New passwords must have 6–128 characters. A small local blocklist rejects common/repeated passwords; this is not an exhaustive breached-password database. Existing accounts require a password update after the security migration. Starter credentials in the environment only provision accounts; changing them does not reset existing passwords.
+- Only admin@northlark.com can be provisioned or authenticated as an administrator. Admin sign-in uses email and password; authenticator and recovery codes are not required. The tester invitation API cannot create admin accounts.
+- Disabling a tester revokes all their sessions and outstanding invitations while retaining execution history. Admins can enable previously activated testers and resend pending invitations. Sessions also rotate on password change, revoking other sessions.
+- The admin Security Audit page records account invitations, acceptance, status changes, password changes, and sign-in success/failure. Events identify users by database IDs, not credentials; passwords and invitation tokens are never stored in audit events. Audit events have no update/delete API. A database administrator can still modify the database; the log is not tamper-proof.
+
+### Email configuration
+
+No connector or ChatGPT plugin is required. The backend supports Microsoft Graph for company Microsoft 365 mailboxes, SMTP with verified TLS, and a local outbox. Configure these values in `dashboard/.env`:
+
+```env
+MAIL_MODE=outbox
+PUBLIC_APP_URL=http://127.0.0.1:5173
+MAIL_FROM=sentinel@northlark.com
+SMTP_HOST=
+SMTP_PORT=587
+SMTP_USERNAME=
+SMTP_PASSWORD=
+SMTP_SSL=0
+```
+
+`outbox` is an explicit local development mode: invitation messages are saved as `.eml` files under `storage/email_outbox`, and the UI states that no email was sent. Open the newest file locally and use its invitation link for development. Anyone able to read that file can use its link until it expires or is revoked. Keep the outbox private and remove expired messages as part of local housekeeping.
+
+For real delivery set `MAIL_MODE=smtp` and fill in your provider's host, sender, and SMTP credentials. Port 587 uses STARTTLS; set `SMTP_SSL=1` for implicit TLS (usually port 465). The sender must be authorised by the provider. Use an HTTPS `PUBLIC_APP_URL` and `SECURE_COOKIES=1` for a hosted system. SMTP delivery failure rolls back the invitation and reports an error; it is not shown as sent.
+
+The SMTP transport supports credentials or an authorised relay. SPF/DKIM/DMARC and sender-domain verification are configured with the email provider, not in this application.
+
+### Microsoft 365 / Outlook company mailbox
+
+The Graph transport uses application credentials and obtains its own access token for each invitation. It does not use a mailbox password or require an interactive Outlook login. No additional Python dependency is required. See Microsoft's [application authentication flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow).
+
+1. In the Microsoft Entra admin center, open **App registrations → New registration**. Create a single-tenant application named `Sentinel Dashboard Mail`.
+2. Copy its **Directory (tenant) ID** and **Application (client) ID** from Overview.
+3. Open **Certificates & secrets → Client secrets → New client secret**. Put the secret **Value** directly into the local environment file, not the secret ID. Track its expiry and replace it before expiration.
+4. Ask the Microsoft 365/Exchange administrator to authorise the app for the chosen sender mailbox. Prefer the scoped `Application Mail.Send` role using [Exchange Application RBAC](https://learn.microsoft.com/en-us/exchange/permissions-exo/application-rbac). The administrator must register the enterprise service principal in Exchange, scope the role to the sender, and test its access. Avoid adding an unscoped Entra `Mail.Send` grant alongside scoped RBAC: those grants are additive and can allow other mailboxes.
+5. Fill in the environment values below, set `MAIL_MODE=graph` only when ready, and restart the backend:
+
+```env
+MAIL_MODE=graph
+MAIL_FROM=YOUR_ACTUAL_SENDER@northlark.com
+MICROSOFT_TENANT_ID=YOUR_DIRECTORY_TENANT_ID
+MICROSOFT_CLIENT_ID=YOUR_APPLICATION_CLIENT_ID
+MICROSOFT_CLIENT_SECRET=YOUR_SECRET_VALUE
+PUBLIC_APP_URL=http://127.0.0.1:5173
+```
+
+The sender must be an existing, authorised Microsoft 365 mailbox. The tenant and client IDs must be UUIDs. For testers on other computers, replace the loopback public URL with the dashboard address they can reach; use HTTPS when hosted. Keep secrets in the backend environment only.
+
+The app submits mail through [Graph sendMail](https://learn.microsoft.com/en-us/graph/api/user-sendmail?view=graph-rest-1.0). A successful response means Microsoft accepted the message for delivery, not that it reached the inbox. The UI reflects that distinction. Missing configuration, authentication failures, and rejected sends roll back the invitation without falling back to the outbox or SMTP. Real Microsoft delivery still needs a configured tenant and an invitation sent through the UI; automated tests use a mocked Microsoft service.
+
+The new routes are `POST /api/auth/invitations/accept`, `POST /api/auth/password`, `POST /api/testers/{id}/invite`, `POST /api/testers/{id}/status`, and `GET /api/audit`. `POST /api/testers` now accepts only name/email and sends an invitation; it no longer accepts a password.
+
+Account creation accepts only the exact `northlark.com` email domain, including initial accounts provisioned by `app.setup`. Addresses are trimmed and lowercased before validation and duplicate detection. External domains, subdomains, and suffix lookalikes are rejected by the backend as well as the account creation form. This validates the address domain; it does not verify mailbox ownership or change existing accounts.
 
 Report URLs accept a run ID and a fixed HTML/PDF format, never an arbitrary path. Downloads require authentication. HTML reports escape test content and are served with a restrictive content security policy. Both reports include run settings, initiating tester, outcomes, and failure details. Mock reports are prominently labeled simulated.
 

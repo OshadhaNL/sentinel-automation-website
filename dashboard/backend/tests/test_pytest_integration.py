@@ -12,7 +12,7 @@ from app.main import create_app
 from app.models import TestCase
 from app.services.discovery import collect_tests
 from app.setup import provision
-from conftest import login
+from conftest import login, TEST_PASSWORD
 from test_backend import start
 
 
@@ -72,7 +72,7 @@ def test_parameters(value):
     app = create_app(settings)
     with TestClient(app) as client:
         with app.state.sessions() as db:
-            provision(db, 'Tester', 'tester@northlark.com', 'password123', 'tester')
+            provision(db, 'Tester', 'tester@northlark.com', TEST_PASSWORD, 'tester')
         login(client)
         run = start(client, camera_mode='exclude', workers=workers)
         assert run['workers'] == workers
@@ -113,7 +113,7 @@ def test_unknown_categories_and_camera_dependencies_are_not_silently_guessed(tmp
     app = create_app(settings)
     with TestClient(app) as client:
         with app.state.sessions() as db:
-            provision(db, 'Tester', 'tester@northlark.com', 'password123', 'tester')
+            provision(db, 'Tester', 'tester@northlark.com', TEST_PASSWORD, 'tester')
         login(client)
         assert client.post('/api/runs', json={'scope_type': 'all', 'selection': 'positive'}).status_code == 422
         assert client.post('/api/runs', json={'scope_type': 'all', 'camera_mode': 'exclude'}).status_code == 422

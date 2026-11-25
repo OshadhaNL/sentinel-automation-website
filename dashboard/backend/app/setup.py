@@ -4,21 +4,28 @@ import os
 from sqlalchemy import select
 
 from app.core.config import Settings
-from app.core.security import hash_password
+from app.core.security import ADMIN_EMAIL, hash_password
 from app.db.database import Base, make_database
 from app.db.migrations import upgrade_schema
 from app.models import User
 from app.schemas import TesterInput
+from app.services.account_security import validate_password
 
 
 def provision(db, name, email, password, role):
     data = TesterInput(name=name, email=email, password=password)
+    if role == 'admin' and data.email != ADMIN_EMAIL:
+        raise ValueError('Only admin@northlark.com can be provisioned as an administrator.')
     existing = db.scalar(select(User).where(User.email == data.email))
     if existing:
         if existing.role != role:
             raise ValueError(f'Existing account has a different role: {data.email}')
         return existing
     user = User(name=data.name, email=data.email, role=role, password_hash=hash_password(data.password))
+    try:
+        validate_password(data.password)
+    except ValueError:
+        user.must_change_password = True
     db.add(user)
     db.commit()
     return user

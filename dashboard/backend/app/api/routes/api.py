@@ -8,12 +8,13 @@ from fastapi.responses import FileResponse
 from sqlalchemy import delete, func, select
 from sqlalchemy.exc import IntegrityError
 
-from app.core.security import admin_only, current_user, hash_password, tester_only, token_hash, user_profile, verify_password
+from app.core.security import ADMIN_EMAIL, admin_only, current_user, hash_password, tester_only, token_hash, user_profile, verify_password
 from app.db.database import get_db, utcnow
-from app.models import DiscoveryInfo, LoginSession, RunnerLock, TestCase, TestResult, TestRun, User
+from app.models import DiscoveryInfo, LoginSession, RunnerLock, TestCase, TestRun, User
 from app.schemas import LoginInput, RunInput, TesterInput
-from app.services.history import case_profile, dashboard_profile, run_profile
+from app.services.history import case_profile, dashboard_profile, latest_result_status, run_profile
 from app.services.selection import selected_cases, worker_recommendation
+from app.services.account_security import audit
 
 router = APIRouter(prefix='/api')
 
@@ -32,9 +33,11 @@ def login(data: LoginInput, request: Request, response: Response, db=Depends(get
         if len(attempts.get(address, [])) >= 20:
             raise HTTPException(429, 'Too many login attempts. Try again in a minute.')
         attempts.setdefault(address, []).append(now)
-    user = db.scalar(select(User).where(User.email == data.email))
+    user = db.scalar(select(User).where(User.email == data.email).with_for_update())
     valid = verify_password(data.password, user.password_hash if user else request.app.state.dummy_password)
-    if not user or not valid or not user.is_active:
+    if not user or not valid or not user.is_active or (user.role == 'admin' and user.email != ADMIN_EMAIL):
+        audit(db, 'login_failed', target=user)
+        db.commit()
         raise HTTPException(401, 'Incorrect email or password.')
     previous = request.cookies.get('sentinel_session')
     if previous:
@@ -42,6 +45,7 @@ def login(data: LoginInput, request: Request, response: Response, db=Depends(get
     db.execute(delete(LoginSession).where(LoginSession.expires_at <= utcnow()))
     token = secrets.token_urlsafe(32)
     db.add(LoginSession(token_hash=token_hash(token), user_id=user.id, expires_at=utcnow() + timedelta(hours=8)))
+    audit(db, 'login_succeeded', user)
     db.commit()
     response.set_cookie('sentinel_session', token, httponly=True, secure=request.app.state.settings.secure_cookies,
                         samesite='strict', max_age=8 * 3600, path='/')
@@ -52,6 +56,9 @@ def login(data: LoginInput, request: Request, response: Response, db=Depends(get
 def logout(request: Request, response: Response, db=Depends(get_db)):
     token = request.cookies.get('sentinel_session')
     if token:
+        session = db.get(LoginSession, token_hash(token))
+        if session:
+            audit(db, 'logout', db.get(User, session.user_id))
         db.execute(delete(LoginSession).where(LoginSession.token_hash == token_hash(token)))
         db.commit()
     response.delete_cookie('sentinel_session', path='/')
@@ -65,18 +72,6 @@ def me(user=Depends(current_user)):
 @router.get('/testers')
 def testers(user=Depends(admin_only), db=Depends(get_db)):
     return [user_profile(tester) for tester in db.scalars(select(User).where(User.role == 'tester').order_by(User.created_at.desc()))]
-
-
-@router.post('/testers', status_code=201)
-def create_tester(data: TesterInput, user=Depends(admin_only), db=Depends(get_db)):
-    tester = User(name=data.name, email=data.email, role='tester', password_hash=hash_password(data.password))
-    db.add(tester)
-    try:
-        db.commit()
-    except IntegrityError as error:
-        db.rollback()
-        raise HTTPException(409, 'An account with this email already exists.') from error
-    return user_profile(tester)
 
 
 @router.get('/dashboard')
@@ -108,8 +103,7 @@ def tests(request: Request, module: str | None = None, category: str | None = No
         pattern = '%' + search.strip().replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_') + '%'
         query = query.where(TestCase.name.ilike(pattern, escape='\\') | TestCase.case_code.ilike(pattern, escape='\\'))
     if status:
-        latest = select(TestResult.status).where(TestResult.test_case_id == TestCase.id, TestResult.status != 'Pending').order_by(TestResult.id.desc()).limit(1).scalar_subquery()
-        query = query.where(func.coalesce(latest, 'Not Run') == status)
+        query = query.where(func.coalesce(latest_result_status(), 'Not Run') == status)
     count = db.scalar(select(func.count()).select_from(query.subquery()))
     cases = list(db.scalars(query.order_by(TestCase.id).offset((page - 1) * page_size).limit(page_size)))
     return dict(items=[case_profile(db, case) for case in cases], total=count, page=page, pageSize=page_size)
@@ -152,6 +146,11 @@ def run_detail(run_id: str, request: Request, user=Depends(current_user), db=Dep
     if not run:
         raise HTTPException(404, 'Execution not found.')
     data = run_profile(db, run, details=True)
+    data['browserRuns'] = []
+    if run.batch_id:
+        browser_runs = db.scalars(select(TestRun).where(TestRun.batch_id == run.batch_id)
+                                 .order_by(TestRun.started_at, TestRun.id))
+        data['browserRuns'] = [dict(id=item.id, browser=item.browser, status=item.status) for item in browser_runs]
     data['busy'] = bool(db.get(RunnerLock, 1).owner) or request.app.state.runner.lock.locked()
     return data
 

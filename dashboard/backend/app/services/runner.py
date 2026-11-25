@@ -16,6 +16,7 @@ from app.models import RunnerLock, TestCase, TestResult, TestRun
 from app.services.discovery import collect_tests, sync_inventory, bridge_environment, pytest_command, check_workers
 from app.services.reports import generate_reports
 from app.services.selection import selected_cases
+from app.services.browsers import BROWSERS, browser_label
 
 ACTIVE = ('Pending', 'Running')
 logger = logging.getLogger(__name__)
@@ -83,16 +84,21 @@ class Runner:
                 cases = selected_cases(db, self.settings, options)
                 if self.settings.executor == 'pytest' and any(case.requires_real_camera or not case.camera_classified for case in cases) and not self.settings.camera_available:
                     raise ValueError('Real camera availability is not confirmed. Configure REAL_CAMERA_AVAILABLE only on a suitable execution machine/session.')
-                run = TestRun(executed_by_user_id=user.id, scope_type=options.scope_type, scope_value=options.scope_value,
-                              selection=options.selection, browser_mode=options.browser_mode, camera_mode=options.camera_mode,
-                              workers=options.workers,
-                              is_mock=self.settings.executor == 'mock')
-                db.add(run)
-                db.flush()
-                for case in cases:
-                    db.add(TestResult(test_run_id=run.id, test_case_id=case.id))
+                # Each browser gets a normal run, preserving the existing history model.
+                batch_id = str(uuid.uuid4()) if len(options.browsers) > 1 else None
+                run_ids = []
+                for browser in options.browsers:
+                    run = TestRun(executed_by_user_id=user.id, scope_type=options.scope_type, scope_value=options.scope_value,
+                                  selection=options.selection, browser_mode=options.browser_mode, camera_mode=options.camera_mode,
+                                  workers=options.workers, browser=browser, batch_id=batch_id,
+                                  is_mock=self.settings.executor == 'mock')
+                    db.add(run)
+                    db.flush()
+                    for case in cases:
+                        db.add(TestResult(test_run_id=run.id, test_case_id=case.id))
+                    run_ids.append(run.id)
                 db.commit()
-                run_id = run.id
+                run_id = run_ids[0]
             self.thread = threading.Thread(target=self.execute, args=(run_id,), daemon=True)
             self.thread.start()
             return run_id
@@ -132,6 +138,23 @@ class Runner:
         try:
             with self.sessions() as db:
                 run = db.get(TestRun, run_id)
+                run_ids = [run_id]
+                if run.batch_id:
+                    run_ids = list(db.scalars(select(TestRun.id).where(TestRun.batch_id == run.batch_id)
+                                             .order_by(TestRun.started_at, TestRun.id)))
+            # Run browsers one at a time. Workers are shared within each browser.
+            for browser_run_id in run_ids:
+                if self.stop.is_set():
+                    self.finish(browser_run_id, 'Interrupted', 'Backend stopped before this browser run completed.')
+                else:
+                    self.execute_one(browser_run_id)
+        finally:
+            self.release()
+
+    def execute_one(self, run_id):
+        try:
+            with self.sessions() as db:
+                run = db.get(TestRun, run_id)
                 run.status = 'Running'
                 db.commit()
                 cases = list(db.scalars(select(TestCase).join(TestResult, TestResult.test_case_id == TestCase.id).where(TestResult.test_run_id == run_id)))
@@ -148,8 +171,6 @@ class Runner:
         except Exception:
             logger.exception('Execution failed for run %s', run_id)
             self.finish(run_id, 'Failed to Start', 'Runner failed. Check backend logs and automation environment.')
-        finally:
-            self.release()
 
     def execute_pytest(self, run, cases):
         with tempfile.TemporaryDirectory(prefix='sentinel-run-') as directory:
@@ -158,7 +179,11 @@ class Runner:
             selected_file.write_text(json.dumps([case.pytest_node_id for case in cases]), encoding='utf-8')
             env = bridge_environment(self.settings, folder)
             env['SENTINEL_SELECTED'] = str(selected_file)
+            browser = BROWSERS[run.browser]
+            env['SENTINEL_BROWSER_ENGINE'] = browser['engine']
             command = pytest_command(self.settings, run.workers)
+            if browser['channel']:
+                command.extend(['--browser-channel', browser['channel']])
             if run.browser_mode == 'headed':
                 command.append('--headed')
             events_path = folder / 'events.jsonl'
@@ -214,7 +239,8 @@ class Runner:
             elif process.returncode in (0, 1):
                 self.finish(run.id, 'Completed')
             else:
-                self.finish(run.id, 'Failed to Start', 'Pytest failed before completing the selected suite. Check the automation environment.')
+                self.finish(run.id, 'Failed to Start',
+                            f"Pytest could not complete the {browser_label(run.browser)} run. Check that the selected browser and Playwright dependencies are installed on the execution PC.")
 
     def recover(self):
         with self.sessions() as db:

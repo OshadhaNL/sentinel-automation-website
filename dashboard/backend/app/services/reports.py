@@ -12,7 +12,7 @@ def generate_reports(db, run, settings):
     folder = settings.reports_root / run.id
     folder.mkdir(parents=True, exist_ok=True)
     label = 'MOCK EXECUTION - SIMULATED RESULTS' if run.is_mock else 'Pytest execution'
-    metadata = f"{data['module']} / {data['scope']} | {data['mode']} | Workers: {data['workers']} | Camera: {data['cameraMode']} | {data['tester']} | {data['executedAt']}"
+    metadata = f"{data['module']} / {data['scope']} | Browser: {data['browserLabel']} | {data['mode']} | Workers: {data['workers']} | Camera: {data['cameraMode']} | {data['tester']} | {data['executedAt']}"
     rows = ''.join('<tr>' + ''.join(f'<td>{escape(str(value or ""))}</td>' for value in
                                   [result['code'], result['name'], result['status'], result['duration'], result['error']]) + '</tr>' for result in data['results'])
     html = f'''<!doctype html><html><head><meta charset="utf-8"><title>Sentinel {escape(run.id)}</title>

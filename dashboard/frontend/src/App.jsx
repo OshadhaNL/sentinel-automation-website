@@ -14,67 +14,51 @@ import TestCasesPanel from './components/tables/TestCasesPanel.jsx';
 import TestCaseDetails from './components/common/TestCaseDetails.jsx';
 import RunStatus from './components/common/RunStatus.jsx';
 import * as api from './services/api.js';
+import AcceptInvitation from './pages/auth/AcceptInvitation.jsx';
+import SecuritySetup from './pages/auth/SecuritySetup.jsx';
+import AuditHistory from './pages/admin/AuditHistory.jsx';
+import useDashboardData, { emptyCases } from './hooks/useDashboardData.js';
+
+const initialInviteToken = new URLSearchParams(window.location.hash.slice(1)).get('invite') || '';
 
 const emptyFilters = { search: '', module: '', category: '', status: '', page: 1 };
-const emptyCases = { items: [], total: 0, pageSize: 20 };
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [inviteToken, setInviteToken] = useState(initialInviteToken);
+  const [changingPassword, setChangingPassword] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
-  const [data, setData] = useState(null);
   const [testers, setTesters] = useState([]);
-  const [cases, setCases] = useState(emptyCases);
   const [filters, setFilters] = useState(emptyFilters);
-  const [history, setHistory] = useState({ items: [], total: 0 });
   const [historyPage, setHistoryPage] = useState(1);
   const [view, setView] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [modal, setModal] = useState(null);
   const [error, setError] = useState('');
-  const [connectionError, setConnectionError] = useState('');
   const [notice, setNotice] = useState('');
   const [syncing, setSyncing] = useState(false);
+  const { data, cases, setCases, history, connectionError, refreshData } = useDashboardData({
+    user, view, filters, historyPage, paused: changingPassword || Boolean(inviteToken), setUser,
+  });
 
   useEffect(() => {
-    api.getMe().then(setUser).catch(() => {}).finally(() => setCheckingSession(false));
+    const controller = new AbortController();
+    api.getMe(controller.signal).then((account) => {
+      if (controller.signal.aborted) return;
+      setUser(account);
+      setView(account.role === 'admin' ? 'testers' : 'overview');
+    }).catch(() => {}).finally(() => { if (!controller.signal.aborted) setCheckingSession(false); });
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
-    if (user?.role === 'admin') api.getTesters().then(setTesters).catch((failure) => setError(failure.message));
+    if (user?.role !== 'admin' || user.mustChangePassword) return;
+    const controller = new AbortController();
+    api.getTesters(controller.signal).then((accounts) => {
+      if (!controller.signal.aborted) setTesters(accounts);
+    }).catch((failure) => { if (!controller.signal.aborted) setError(failure.message); });
+    return () => controller.abort();
   }, [user]);
-
-  useEffect(() => {
-    if (!user) return;
-    let alive = true;
-    let fetching = false;
-    async function refresh() {
-      if (fetching) return;
-      fetching = true;
-      try {
-        const dashboard = await api.getDashboard();
-        if (!alive) return;
-        setData(dashboard);
-        if (view === 'all' || dashboard.modules.some((module) => module.name === view)) {
-          const params = { ...filters, page_size: 20, module: view === 'all' ? filters.module : view };
-          const inventory = await api.getTests(params);
-          if (alive) setCases(inventory);
-        }
-        if (view === 'history' || view === 'reports') {
-          const runs = await api.getRuns(historyPage);
-          if (alive) setHistory(runs);
-        }
-        if (alive) setConnectionError('');
-      } catch (failure) {
-        if (alive) {
-          setConnectionError(failure.message);
-          if (failure.status === 401) setUser(null);
-        }
-      } finally { fetching = false; }
-    }
-    const initial = setTimeout(refresh, 200);
-    const polling = setInterval(refresh, 2000);
-    return () => { alive = false; clearTimeout(initial); clearInterval(polling); };
-  }, [user, view, filters, historyPage]);
 
   function navigate(nextView) {
     setView(nextView);
@@ -88,12 +72,11 @@ export default function App() {
     try {
       await api.logout();
       setUser(null);
-      setData(null);
+      setChangingPassword(false);
       setModal(null);
       setTesters([]);
       setNotice('');
       setError('');
-      setConnectionError('');
       navigate('overview');
     } catch (failure) { setError(failure.message); }
   }
@@ -104,9 +87,7 @@ export default function App() {
     try {
       const result = await api.discoverTests();
       setNotice(result.count + ' tests synchronized. Existing history was preserved.');
-      setData(await api.getDashboard());
-      const inventory = await api.getTests({ ...filters, module: view === 'all' ? filters.module : data?.modules.some((module) => module.name === view) ? view : '' });
-      setCases(inventory);
+      refreshData();
     } catch (failure) { setError(failure.message); }
     finally { setSyncing(false); }
   }
@@ -119,11 +100,13 @@ export default function App() {
   async function runTests(settings) {
     const run = await api.startRun(settings);
     setModal({ type: 'run', id: run.id });
-    setData(await api.getDashboard());
+    refreshData();
   }
 
+  if (inviteToken) return <AcceptInvitation token={inviteToken} onDone={() => { setInviteToken(''); window.history.replaceState(null, '', window.location.pathname); setUser(null); }} />;
   if (checkingSession) return <main className="connection-state">Checking your session…</main>;
-  if (!user) return <Login onLogin={(account) => { navigate('overview'); setError(''); setUser(account); }} />;
+  if (!user) return <Login onLogin={(account) => { navigate(account.role === 'admin' ? 'testers' : 'overview'); setError(''); setUser(account); }} />;
+  if (user.mustChangePassword || changingPassword) return <SecuritySetup user={changingPassword ? { ...user, mustChangePassword: true } : user} onComplete={(account) => { setUser(account); setChangingPassword(false); }} onLogout={signOut} />;
 
   const modules = data?.modules || [];
   const selectedModule = modules.find((module) => module.name === view);
@@ -131,14 +114,20 @@ export default function App() {
   const isAdmin = user.role === 'admin';
   const activeRun = data?.activeRun;
   const busy = Boolean(data?.busy || activeRun);
-  const title = view === 'overview' ? (isAdmin ? 'Admin Dashboard' : 'Dashboard')
-    : view === 'all' ? 'All Systems' : view === 'reports' ? 'Reports'
-    : view === 'history' ? 'Execution History' : view === 'testers' ? 'Tester Management' : view;
+  const pageTitles = {
+    overview: isAdmin ? 'Admin Dashboard' : 'Dashboard',
+    all: 'All Systems',
+    reports: 'Reports',
+    history: 'Execution History',
+    testers: 'Tester Management',
+    audit: 'Security Audit',
+  };
+  const title = pageTitles[view] || view;
   const DashboardPage = isAdmin && view === 'overview' ? AdminDashboard : Dashboard;
   const isInventoryView = view === 'all' || Boolean(selectedModule);
 
   return <div className="app">
-    <Header user={user} onLogout={signOut} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+    <Header user={user} onLogout={signOut} onSecurity={() => setChangingPassword(true)} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
     <Sidebar user={user} modules={modules} view={view} onNavigate={navigate} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
     <main className="main-content">
       <div className="page-heading">
@@ -167,6 +156,7 @@ export default function App() {
           onFilter={(name, value) => setFilters({ ...filters, [name]: value, page: name === 'page' ? value : 1 })}
           onDetails={openTest} onRun={(test) => setModal({ type: 'execute', module: test.module, test })} />}
         {view === 'testers' && isAdmin && <TesterManagement testers={testers} onCreate={() => setModal({ type: 'createTester' })} />}
+        {view === 'audit' && isAdmin && <AuditHistory />}
         {(view === 'reports' || view === 'history') && <section className="panel reports-panel"><div className="panel-heading"><h2>{view === 'reports' ? 'Execution Reports' : 'Executions'}</h2></div><p className="panel-note">Select a run for its results and HTML/PDF reports. Run status is separate from individual test outcomes.</p>
           <ExecutionsTable runs={history.items} onSelect={(run) => setModal({ type: 'run', id: run.id })} />
           <div className="pagination"><button className="secondary-button" disabled={historyPage === 1} onClick={() => setHistoryPage(historyPage - 1)}>Previous</button><span>Page {historyPage}</span><button className="secondary-button" disabled={historyPage * 30 >= history.total} onClick={() => setHistoryPage(historyPage + 1)}>Next</button></div>
@@ -176,12 +166,12 @@ export default function App() {
     {modal?.type === 'execute' && !isAdmin && <Modal key="execute" title="Execute Tests" onClose={() => setModal(null)}><RunTestsForm modules={modules} moduleName={modal.module} testCase={modal.test} isMock={data?.provider === 'mock'} onRun={runTests} onClose={() => setModal(null)} /></Modal>}
     {modal?.type === 'run' && <Modal key="run" wide title="Execution Details" onClose={() => setModal(null)}><RunStatus runId={modal.id} /></Modal>}
     {modal?.type === 'test' && <Modal key="test" wide title="Test Case Details" onClose={() => setModal(null)}><TestCaseDetails test={modal.test} /></Modal>}
-    {modal?.type === 'createTester' && isAdmin && <Modal key="createTester" title="Create Tester" onClose={() => setModal(null)}><CreateTesterForm onCancel={() => setModal(null)} onCreate={async (details) => {
+    {modal?.type === 'createTester' && isAdmin && <Modal key="createTester" wide title="Invite Tester" onClose={() => setModal(null)}><CreateTesterForm onCancel={() => setModal(null)} onCreate={async (details) => {
       const tester = await api.createTester(details);
       setTesters(await api.getTesters());
-      setModal(null);
       navigate('testers');
-      setNotice(tester.name + ' was created and can now sign in.');
+      setNotice(tester.name + ': ' + tester.message);
+      return tester;
     }} /></Modal>}
   </div>;
 }

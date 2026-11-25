@@ -21,6 +21,12 @@ def pytest_collection_modifyitems(config, items):
     records = []
     for item in items:
         node = item.nodeid
+        # Keep discovery IDs stable across browsers. Only the runtime fixture
+        # value changes, so existing test codes and history remain intact.
+        engine = os.getenv('SENTINEL_BROWSER_ENGINE')
+        parameters = getattr(item, 'callspec', None)
+        if engine and parameters and 'browser_name' in parameters.params:
+            parameters.params['browser_name'] = engine
         marks = {mark.name for mark in item.iter_markers()}
         filename = node.split('::')[0].replace('\\', '/').lower()
         if '/profiles/' in filename:

@@ -19,6 +19,7 @@ def bridge_environment(settings, folder):
     env['PYTEST_ADDOPTS'] = ''
     env.pop('SENTINEL_SELECTED', None)
     env.pop('SENTINEL_COLLECT', None)
+    env.pop('SENTINEL_BROWSER_ENGINE', None)
     env['SENTINEL_METADATA'] = str(settings.metadata_file)
     env['SENTINEL_EVENTS'] = str(folder / 'events.jsonl')
     return env

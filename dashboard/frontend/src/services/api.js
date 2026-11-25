@@ -6,7 +6,8 @@ async function request(path, options = {}) {
       ...options,
       headers: { 'Content-Type': 'application/json', ...options.headers },
     });
-  } catch {
+  } catch (failure) {
+    if (failure.name === 'AbortError') throw failure;
     throw new Error('Backend unavailable. Start FastAPI and check the database configuration.');
   }
   if (!response.ok) {
@@ -21,14 +22,20 @@ async function request(path, options = {}) {
 
 export const login = (email, password) => request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
 export const logout = () => request('/auth/logout', { method: 'POST' });
-export const getMe = () => request('/auth/me');
-export const getDashboard = () => request('/dashboard');
-export const getTesters = () => request('/testers');
-export const createTester = (details) => request('/testers', { method: 'POST', body: JSON.stringify(details) });
+export const getMe = (signal) => request('/auth/me', { signal });
+export const getDashboard = (signal) => request('/dashboard', { signal });
+export const getTesters = (signal) => request('/testers', { signal });
+export const createTester = (details) => request('/testers/outlook-draft', { method: 'POST', body: JSON.stringify(details) });
+export const prepareOutlookDraft = (id) => request('/testers/' + id + '/outlook-draft', { method: 'POST' });
 export const discoverTests = () => request('/discovery', { method: 'POST' });
-export const getTests = (filters) => request('/tests?' + new URLSearchParams(filters));
+export const getTests = (filters, signal) => request('/tests?' + new URLSearchParams(filters), { signal });
 export const getTest = (id) => request('/tests/' + id);
-export const getRun = (id) => request('/runs/' + id);
-export const getRuns = (page = 1) => request('/runs?page=' + page);
+export const getRun = (id, signal) => request('/runs/' + id, { signal });
+export const getRuns = (page = 1, signal) => request('/runs?page=' + page, { signal });
 export const startRun = (settings) => request('/runs', { method: 'POST', body: JSON.stringify(settings) });
 export const previewRun = (settings) => request('/runs/preview', { method: 'POST', body: JSON.stringify(settings) });
+export const acceptInvitation = (token, password) => request('/auth/invitations/accept', { method: 'POST', body: JSON.stringify({ token, password }) });
+export const changePassword = (current_password, password) => request('/auth/password', { method: 'POST', body: JSON.stringify({ current_password, password }) });
+export const setTesterStatus = (id, is_active) => request('/testers/' + id + '/status', { method: 'POST', body: JSON.stringify({ is_active }) });
+export const resendInvitation = (id) => request('/testers/' + id + '/invite', { method: 'POST' });
+export const getAudit = (page = 1) => request('/audit?page=' + page);

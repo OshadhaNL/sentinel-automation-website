@@ -19,6 +19,8 @@ __pycache__/
 # Generated reports
 storage/reports/*
 !storage/reports/.gitkeep
+storage/email_outbox/
+storage/mfa.key
 
 # Editor and OS
 .vscode/
