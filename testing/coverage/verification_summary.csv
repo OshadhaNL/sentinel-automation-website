@@ -1,0 +1,27 @@
+metric,value,notes
+Review date,2026-11-26,QA UI version 2.6.0+15 observed at login
+New automated scenarios,64,32 test functions expanded through parameterization
+Passed,63,Live Chromium checks; failed-login responses simulated locally
+Failed,1,Confirmed password guidance discrepancy; assertion intentionally retained
+Skipped,0,Final full run
+Entire suite collected,1676,Includes original suite and 64 new review scenarios
+Existing test function definitions,1149,Static count includes six shadowed earlier definitions
+Shadowed earlier definitions,6,Existing onboarding class; no legacy bodies changed
+Existing suites executed,No,Write-heavy original suites were compared by source and collection only
+Business-data changes,None submitted,Authenticated review fixtures block mutating API requests
+Cross-browser execution,Chromium only,"Chrome, Edge, WebKit and actual role matrix remain separate validation work"
+Focused Activity Logs recheck,13 passed,Final selectors verified without skips
+Workflow extension cases,54,33 read-only cases; 16 persistent cases; five role contract cases
+Workflow extension validated,34,Latest focused Chromium runs plus the observed Admin example
+Workflow extension not executed,20,Not passes: write opt-ins/disposable fixtures or other-role policy/accounts required
+Workflow extension full collection,1730,"118 total review cases, including the initial 64; all legacy tests preserved"
+Workflow extension browser collection,32 cases,16 persistent workflows collected for Chromium and WebKit; not live WebKit execution
+Workflow extension metadata,54 classified,"Dashboard pytest bridge checked all new cases: supported module, positive/negative, no camera dependency"
+Workflow extension PNG validation,Passed,"Valid image structure, exact byte size, per-chunk CRCs, decompressed pixel data"
+Remaining pass cases added,203,147 read-only/intercepted cases and 56 persistent workflows
+Remaining pass validated,137,Chromium; latest full-file and focused JUnit outcomes combined by stable test ID
+Remaining pass not executed,66,56 persistent cases plus 10 camera/ownership/invitation-fixture cases; not business passes
+Remaining pass full collection,1933,321 review cases; all 1730 baseline IDs preserved
+Remaining pass write guards,72 skipped,Every review persistent case with feature flags disabled; 249 other cases deselected
+Remaining pass dashboard discovery,203 mapped,"Stable IDs, semantic modules and camera flags; 37 policy-dependent cases remain Unclassified"
+Remaining pass scope,Identified gaps implemented,Not proof of exhaustive coverage; unknown business rules and alternative browsers remain unverified

@@ -1,0 +1,89 @@
+file,test_function,category,validation_status
+testing/tests/ui/review/test_activity_logs.py,test_positive_activity_log_columns,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_activity_logs.py,test_positive_activity_log_filter_controls,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_activity_logs.py,test_negative_unknown_activity_search_has_empty_state,Negative,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_activity_logs.py,test_positive_activity_search_clear_recovers_results,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_activity_logs.py,test_positive_activity_details_open_and_close,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_activity_logs.py,test_negative_activity_previous_disabled_on_first_page,Negative / Boundary,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_activity_logs.py,test_positive_activity_pagination_round_trip,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_activity_logs.py,test_negative_activity_search_input_is_plain_text,Negative,Passed: 6 live Chromium scenarios
+testing/tests/ui/review/test_login_resilience.py,test_negative_login_error_keeps_credentials_form_usable,Negative,Passed: 4 live Chromium scenarios
+testing/tests/ui/review/test_login_resilience.py,test_negative_login_network_failure_allows_retry,Negative,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_login_resilience.py,test_negative_other_modules_require_authentication,Negative,Passed: 9 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestSettingsNavigation.test_positive_settings_deep_link_and_reload,Positive,Passed: 4 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestSettingsNavigation.test_positive_settings_menu_expands_and_collapses,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControl.test_positive_user_table_columns,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControl.test_positive_add_user_draft_is_discarded_on_cancel,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControl.test_positive_available_staff_roles,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControl.test_positive_invitation_table_columns,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControl.test_positive_invitation_tab_survives_reload,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControl.test_positive_invitation_language_options,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControl.test_positive_cancel_invitation_discards_email,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControlValidation.test_negative_empty_user_form_stays_open_without_api_write,Negative,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControlValidation.test_negative_invalid_user_email_has_inline_validation,Negative,Passed: 4 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestAccessControlValidation.test_negative_expired_invite_link_cannot_be_copied,Negative,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestProfileSettings.test_positive_password_nine_characters_meets_length_rule,Positive / Boundary,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestProfileSettings.test_positive_account_email_is_read_only,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestProfileSettings.test_positive_unsaved_name_does_not_persist,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestProfileSettings.test_positive_password_visibility_toggle,Positive,Passed: 3 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestPasswordBoundaries.test_negative_password_length_boundary_matches_displayed_rule,Negative / Boundary,Passed: 2 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestPasswordBoundaries.test_negative_missing_password_requirement_is_flagged,Negative,Failed for one parameter: confirmed QA-001 UI discrepancy; other parameters passed
+testing/tests/ui/review/test_settings.py,TestConfigurationReadOnly.test_positive_configuration_sections,Positive,Passed: 5 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestConfigurationReadOnly.test_positive_configuration_switches_expose_boolean_states,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_settings.py,TestConfigurationReadOnly.test_positive_invite_configuration_has_explicit_save,Positive,Passed: 1 live Chromium scenarios
+testing/tests/ui/review/test_role_permissions.py,test_role_ui_and_api_permissions_match_approved_matrix,Negative,1/5 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/test_session_workflows.py,test_negative_expired_session_returns_to_login,Negative,Passed: 10 live Chromium scenarios
+testing/tests/ui/review/test_session_workflows.py,test_negative_removed_local_session_cannot_reopen_module,Negative,Passed: 10 live Chromium scenarios
+testing/tests/ui/review/test_workflow_recovery.py,test_negative_transaction_edit_discard_survives_reopen,Negative,Passed: 4 live Chromium scenarios
+testing/tests/ui/review/test_workflow_recovery.py,test_negative_onboarding_draft_exit_never_creates_pending_client,Negative,Passed: 4 live Chromium scenarios
+testing/tests/ui/review/test_workflow_recovery.py,test_positive_screening_draft_navigation_does_not_start_analysis,Positive,Passed: 2 live Chromium scenarios
+testing/tests/ui/review/test_workflow_recovery.py,test_negative_transaction_list_failure_can_recover_without_relogin,Negative,Passed: 3 live Chromium scenarios
+testing/tests/ui/review/workflows/test_onboarding_lifecycle.py,test_positive_new_client_reopens_same_id_after_interruption,Positive,0/2 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_onboarding_lifecycle.py,test_positive_verified_individual_kyc_risk_completion_and_profile,Positive,0/1 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_screening_lifecycle.py,test_positive_ongoing_analysis_reload_reopen_remove_lifecycle,Positive,0/2 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_screening_lifecycle.py,test_positive_new_analysis_resolution_survives_reload,Positive,0/3 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_transaction_lifecycle.py,test_positive_create_edit_reload_preserves_id_fields_and_parties,Positive,0/1 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_transaction_lifecycle.py,test_negative_failed_edit_preserves_saved_record_then_retry_succeeds,Negative,0/2 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_transaction_lifecycle.py,test_negative_double_submit_creates_exactly_one_transaction,Negative,0/1 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/test_access_control_failures.py,test_negative_account_submission_failure_preserves_usable_form,Negative,14/14 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_access_control_failures.py,test_boundary_invite_name_uses_two_trimmed_characters,Boundary,10/10 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_api_security.py,test_negative_protected_api_rejects_invalid_authentication,Negative,18/18 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_api_security.py,test_negative_configuration_does_not_expose_settings_to_anonymous_requests,Negative,2/2 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_calendar_boundaries.py,test_boundary_future_dates_disabled_in_record_and_filter_calendars,Boundary,6/6 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_camera_recovery.py,test_negative_camera_failure_can_retry_and_close_without_upload,Negative,0/3 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_camera_recovery.py,test_positive_closing_simulated_camera_stops_every_video_track,Positive,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_config_boundaries.py,test_boundary_invite_period_unit_limits,Boundary,30/30 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_config_boundaries.py,test_boundary_reminder_schedule_order_and_expiry,Boundary,7/7 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_config_failures.py,test_negative_config_toggle_failure_preserves_saved_setting,Negative,4/4 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_cross_client_security.py,test_negative_other_client_cannot_read_owned_resource,Negative,0/4 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_invitation_expiry.py,test_negative_unusable_invitation_does_not_grant_app_access,Negative,0/2 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_profile_save_failures.py,test_negative_profile_save_failure_does_not_change_saved_name,Negative,6/6 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_profile_save_failures.py,test_negative_password_failure_keeps_change_form_usable,Negative,7/7 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_screening_provider_failures.py,test_negative_analysis_failure_allows_retry_without_provider_call,Negative,16/16 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_transaction_upload_boundaries.py,test_boundary_deferred_png_accepts_size_through_inclusive_limit,Boundary,3/3 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_transaction_upload_boundaries.py,test_boundary_deferred_png_rejects_one_byte_over_limit,Boundary,1/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_transaction_upload_boundaries.py,test_negative_deferred_uploader_rejects_unsupported_extension,Negative,7/7 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_transaction_upload_boundaries.py,test_positive_deferred_png_preserves_filename,Positive,5/5 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/test_transaction_upload_boundaries.py,test_positive_cancelled_file_draft_is_not_attached_to_next_transaction,Positive,1/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_account_lifecycle.py,test_positive_disposable_staff_account_lifecycle,Unclassified,0/3 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_account_lifecycle.py,test_positive_disposable_invitation_link_and_email,Unclassified,0/2 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_config_lifecycle.py,test_positive_source_of_funds_setting_persists_and_is_restored,Positive,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_config_lifecycle.py,test_positive_invite_period_and_reminder_schedule_persist_then_restore,Positive,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_document_lifecycle.py,test_positive_upload_preview_cancel_delete_reload_then_delete,Positive,0/1 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_document_lifecycle.py,test_boundary_document_size_acceptance_matches_displayed_limit,Boundary,0/3 cases passed live; remaining cases need opt-ins/data/policy
+testing/tests/ui/review/workflows/test_document_lifecycle.py,test_negative_content_extension_mismatch_matches_document_policy,Negative,0/2 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_document_lifecycle.py,test_negative_duplicate_filename_does_not_silently_replace_another_slot,Negative,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_document_lifecycle.py,test_negative_failed_replacement_keeps_original_saved_document,Negative,0/2 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_personal_boundaries.py,test_boundary_name_length_matches_agreed_limit,Boundary,0/6 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_personal_boundaries.py,test_boundary_name_character_rules_and_normalization,Boundary,0/4 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_personal_boundaries.py,test_boundary_minimum_age_matches_birthday_rule,Boundary,0/3 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_personal_boundaries.py,test_boundary_birth_and_expiry_dates_match_agreed_policy,Boundary,0/5 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_screening_csv_contracts.py,test_screening_csv_validation_and_final_row_accounting,Negative,0/7 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_session_backend.py,test_positive_real_refresh_produces_usable_access_token,Positive,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_session_backend.py,test_negative_logout_revokes_refresh_token,Negative,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_session_backend.py,test_negative_post_logout_access_obeys_agreed_revocation_policy,Negative,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_session_backend.py,test_negative_real_issued_access_token_expires,Negative,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_transaction_contracts.py,test_boundary_financial_value_matches_agreed_rules,Boundary,0/10 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_transaction_contracts.py,test_boundary_deposit_sale_relationship_matches_policy,Boundary,0/3 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_transaction_contracts.py,test_boundary_money_precision_matches_rounding_policy,Boundary,0/1 added cases passed; see all_remaining_results.csv for prerequisites
+testing/tests/ui/review/workflows/test_transaction_contracts.py,test_negative_concurrent_edit_obeys_conflict_policy,Negative,0/1 added cases passed; see all_remaining_results.csv for prerequisites

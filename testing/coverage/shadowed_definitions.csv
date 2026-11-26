@@ -1,0 +1,7 @@
+file,class_or_scope,definition,earlier_line,overriding_line
+testing/tests/ui/test_individual_onboarding_page.py,TestIndividualOnboarding.,test_submit_without_verification_details,545,588
+testing/tests/ui/test_individual_onboarding_page.py,TestIndividualOnboarding.,test_submit_with_document_type_only,555,593
+testing/tests/ui/test_individual_onboarding_page.py,TestIndividualOnboarding.,test_submit_with_documents_but_no_live_photo,567,600
+testing/tests/ui/test_individual_onboarding_page.py,TestIndividualOnboarding.,test_review_first_last_name_fields,807,812
+testing/tests/ui/test_individual_onboarding_page.py,TestIndividualOnboarding.,test_review_save_confirm_action,913,925
+testing/tests/ui/test_individual_onboarding_page.py,TestIndividualOnboarding.,test_risk_16_verification_details_persist,2592,2631

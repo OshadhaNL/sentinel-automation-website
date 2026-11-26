@@ -1,1 +1,1287 @@
-{}
+{
+  "tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-ADMIN]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-ANALYST]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-MLRO]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-COMPLIANCE_OFFICER]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-CLIENT]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-home]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-dashboard]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-onboarding]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-profiles]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-transaction-activities]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-screening]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-activity-logs]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-access-control]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-profile-settings]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-config]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-home]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-dashboard]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-onboarding]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-profiles]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-transaction-activities]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-screening]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-activity-logs]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-access-control]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-profile-settings]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-config]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-cancel]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-close]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-reload]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-navigate]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-reload-individual]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-reload-entity]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-navigate-individual]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-navigate-entity]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_positive_screening_draft_navigation_does_not_start_analysis[chromium-individual]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_positive_screening_draft_navigation_does_not_start_analysis[chromium-organization]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_transaction_list_failure_can_recover_without_relogin[chromium-500]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_transaction_list_failure_can_recover_without_relogin[chromium-503]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_workflow_recovery.py::test_negative_transaction_list_failure_can_recover_without_relogin[chromium-offline]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_positive_upload_preview_cancel_delete_reload_then_delete[chromium]": {
+    "module": "Profiles",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_boundary_document_size_acceptance_matches_displayed_limit[chromium-limit-minus-one]": {
+    "module": "Profiles",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_boundary_document_size_acceptance_matches_displayed_limit[chromium-exact-limit]": {
+    "module": "Profiles",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_boundary_document_size_acceptance_matches_displayed_limit[chromium-limit-plus-one]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_onboarding_lifecycle.py::test_positive_new_client_reopens_same_id_after_interruption[chromium-individual]": {
+    "module": "Onboarding",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_onboarding_lifecycle.py::test_positive_new_client_reopens_same_id_after_interruption[chromium-entity]": {
+    "module": "Onboarding",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_onboarding_lifecycle.py::test_positive_verified_individual_kyc_risk_completion_and_profile[chromium]": {
+    "module": "Onboarding",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_ongoing_analysis_reload_reopen_remove_lifecycle[chromium-individual]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_ongoing_analysis_reload_reopen_remove_lifecycle[chromium-organization]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_new_analysis_resolution_survives_reload[chromium-Positive Hits]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_new_analysis_resolution_survives_reload[chromium-False Hits]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_new_analysis_resolution_survives_reload[chromium-Possible Hits]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_lifecycle.py::test_positive_create_edit_reload_preserves_id_fields_and_parties[chromium]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_lifecycle.py::test_negative_failed_edit_preserves_saved_record_then_retry_succeeds[chromium-500]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_lifecycle.py::test_negative_failed_edit_preserves_saved_record_then_retry_succeeds[chromium-offline]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_lifecycle.py::test_negative_double_submit_creates_exactly_one_transaction[chromium]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-empty-first]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-empty-last]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-exact-two-first]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-exact-two-last]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-one-character-first]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-one-character-last]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-three-characters-first]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-three-characters-last]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-trimmed-one-first]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_boundary_invite_name_uses_two_trimmed_characters[chromium-trimmed-one-last]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-invite-403]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-invite-409]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-invite-422]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-invite-429]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-invite-500]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-invite-503]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-invite-offline]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-staff-403]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-staff-409]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-staff-422]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-staff-429]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-staff-500]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-staff-503]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_access_control_failures.py::test_negative_account_submission_failure_preserves_usable_form[chromium-staff-offline]": {
+    "module": "Access Control",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_configuration_does_not_expose_settings_to_anonymous_requests[chromium-]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_configuration_does_not_expose_settings_to_anonymous_requests[chromium-not-a-jwt]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-forged-expired-token-auth/me]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-forged-expired-token-auth/profile]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-forged-expired-token-clients]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-forged-expired-token-notifications]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-forged-expired-token-transactions]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-forged-expired-token-user-management]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-malformed-token-auth/me]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-malformed-token-auth/profile]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-malformed-token-clients]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-malformed-token-notifications]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-malformed-token-transactions]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-malformed-token-user-management]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-missing-token-auth/me]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-missing-token-auth/profile]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-missing-token-clients]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-missing-token-notifications]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-missing-token-transactions]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_api_security.py::test_negative_protected_api_rejects_invalid_authentication[chromium-missing-token-user-management]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_calendar_boundaries.py::test_boundary_future_dates_disabled_in_record_and_filter_calendars[chromium-today-profiles]": {
+    "module": "Profiles",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_calendar_boundaries.py::test_boundary_future_dates_disabled_in_record_and_filter_calendars[chromium-today-transactions]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_calendar_boundaries.py::test_boundary_future_dates_disabled_in_record_and_filter_calendars[chromium-tomorrow-profiles]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_calendar_boundaries.py::test_boundary_future_dates_disabled_in_record_and_filter_calendars[chromium-tomorrow-transactions]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_calendar_boundaries.py::test_boundary_future_dates_disabled_in_record_and_filter_calendars[chromium-yesterday-profiles]": {
+    "module": "Profiles",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_calendar_boundaries.py::test_boundary_future_dates_disabled_in_record_and_filter_calendars[chromium-yesterday-transactions]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_camera_recovery.py::test_negative_camera_failure_can_retry_and_close_without_upload[chromium-NotAllowedError]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_camera_recovery.py::test_negative_camera_failure_can_retry_and_close_without_upload[chromium-NotFoundError]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_camera_recovery.py::test_negative_camera_failure_can_retry_and_close_without_upload[chromium-NotReadableError]": {
+    "module": "Onboarding",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_camera_recovery.py::test_positive_closing_simulated_camera_stops_every_video_track[chromium]": {
+    "module": "Onboarding",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-fractional-Days]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-fractional-Hours]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-fractional-Minutes]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-fractional-Months]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-fractional-Weeks]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-maximum-Days]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-maximum-Hours]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-maximum-Minutes]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-maximum-Months]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-maximum-Weeks]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-minimum-Days]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-minimum-Hours]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-minimum-Minutes]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-minimum-Months]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-minimum-Weeks]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-negative-Days]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-negative-Hours]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-negative-Minutes]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-negative-Months]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-negative-Weeks]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-over-maximum-Days]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-over-maximum-Hours]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-over-maximum-Minutes]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-over-maximum-Months]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-over-maximum-Weeks]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-zero-Days]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-zero-Hours]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-zero-Minutes]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-zero-Months]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_invite_period_unit_limits[chromium-zero-Weeks]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_reminder_schedule_order_and_expiry[chromium-after-expiry]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_reminder_schedule_order_and_expiry[chromium-ascending]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_reminder_schedule_order_and_expiry[chromium-at-expiry]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_reminder_schedule_order_and_expiry[chromium-descending]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_reminder_schedule_order_and_expiry[chromium-duplicate]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_reminder_schedule_order_and_expiry[chromium-fractional]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_boundaries.py::test_boundary_reminder_schedule_order_and_expiry[chromium-zero]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_failures.py::test_negative_config_toggle_failure_preserves_saved_setting[chromium-403]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_failures.py::test_negative_config_toggle_failure_preserves_saved_setting[chromium-422]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_failures.py::test_negative_config_toggle_failure_preserves_saved_setting[chromium-500]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_config_failures.py::test_negative_config_toggle_failure_preserves_saved_setting[chromium-503]": {
+    "module": "Config",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_cross_client_security.py::test_negative_other_client_cannot_read_owned_resource[chromium-document]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_cross_client_security.py::test_negative_other_client_cannot_read_owned_resource[chromium-entity]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_cross_client_security.py::test_negative_other_client_cannot_read_owned_resource[chromium-individual]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_cross_client_security.py::test_negative_other_client_cannot_read_owned_resource[chromium-transaction]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_invitation_expiry.py::test_negative_unusable_invitation_does_not_grant_app_access[chromium-EXPIRED]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_invitation_expiry.py::test_negative_unusable_invitation_does_not_grant_app_access[chromium-USED]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_password_failure_keeps_change_form_usable[chromium-400]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_password_failure_keeps_change_form_usable[chromium-403]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_password_failure_keeps_change_form_usable[chromium-422]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_password_failure_keeps_change_form_usable[chromium-429]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_password_failure_keeps_change_form_usable[chromium-500]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_password_failure_keeps_change_form_usable[chromium-503]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_password_failure_keeps_change_form_usable[chromium-offline]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_profile_save_failure_does_not_change_saved_name[chromium-403]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_profile_save_failure_does_not_change_saved_name[chromium-409]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_profile_save_failure_does_not_change_saved_name[chromium-422]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_profile_save_failure_does_not_change_saved_name[chromium-500]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_profile_save_failure_does_not_change_saved_name[chromium-503]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_profile_save_failures.py::test_negative_profile_save_failure_does_not_change_saved_name[chromium-offline]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-400]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-403]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-422]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-429]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-500]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-502]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-503]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-individual-offline]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-400]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-403]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-422]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-429]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-500]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-502]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-503]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_screening_provider_failures.py::test_negative_analysis_failure_allows_retry_without_provider_call[chromium-organization-offline]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_boundary_deferred_png_accepts_size_through_inclusive_limit[chromium-exact-limit]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_boundary_deferred_png_accepts_size_through_inclusive_limit[chromium-limit-minus-one]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_boundary_deferred_png_accepts_size_through_inclusive_limit[chromium-small-valid]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_boundary_deferred_png_rejects_one_byte_over_limit[chromium]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_negative_deferred_uploader_rejects_unsupported_extension[chromium-]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_negative_deferred_uploader_rejects_unsupported_extension[chromium-csv]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_negative_deferred_uploader_rejects_unsupported_extension[chromium-exe]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_negative_deferred_uploader_rejects_unsupported_extension[chromium-gif]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_negative_deferred_uploader_rejects_unsupported_extension[chromium-svg]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_negative_deferred_uploader_rejects_unsupported_extension[chromium-txt]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_negative_deferred_uploader_rejects_unsupported_extension[chromium-zip]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_positive_cancelled_file_draft_is_not_attached_to_next_transaction[chromium]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_positive_deferred_png_preserves_filename[chromium-qa spaced name.png]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_positive_deferred_png_preserves_filename[chromium-qa-\\u6f22\\u5b57-\\xe9.png]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_positive_deferred_png_preserves_filename[chromium-qa.PNG]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_positive_deferred_png_preserves_filename[chromium-qa.multiple.parts.png]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/test_transaction_upload_boundaries.py::test_positive_deferred_png_preserves_filename[chromium-qa_file-123.png]": {
+    "module": "Transactions",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_account_lifecycle.py::test_positive_disposable_invitation_link_and_email[chromium-create-delete]": {
+    "module": "Access Control",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_account_lifecycle.py::test_positive_disposable_invitation_link_and_email[chromium-email-delivery]": {
+    "module": "Access Control",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_account_lifecycle.py::test_positive_disposable_staff_account_lifecycle[chromium-disable-and-reactivate]": {
+    "module": "Access Control",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_account_lifecycle.py::test_positive_disposable_staff_account_lifecycle[chromium-duplicate-email]": {
+    "module": "Access Control",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_account_lifecycle.py::test_positive_disposable_staff_account_lifecycle[chromium-read-back]": {
+    "module": "Access Control",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_config_lifecycle.py::test_positive_invite_period_and_reminder_schedule_persist_then_restore[chromium]": {
+    "module": "Config",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_config_lifecycle.py::test_positive_source_of_funds_setting_persists_and_is_restored[chromium]": {
+    "module": "Config",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_negative_content_extension_mismatch_matches_document_policy[chromium-pdf-as-png]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_negative_content_extension_mismatch_matches_document_policy[chromium-png-as-pdf]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_negative_duplicate_filename_does_not_silently_replace_another_slot[chromium]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_negative_failed_replacement_keeps_original_saved_document[chromium-500]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_document_lifecycle.py::test_negative_failed_replacement_keeps_original_saved_document[chromium-offline]": {
+    "module": "Profiles",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_birth_and_expiry_dates_match_agreed_policy[chromium-expiry-today]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_birth_and_expiry_dates_match_agreed_policy[chromium-expiry-tomorrow]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_birth_and_expiry_dates_match_agreed_policy[chromium-expiry-yesterday]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_birth_and_expiry_dates_match_agreed_policy[chromium-future-dob]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_birth_and_expiry_dates_match_agreed_policy[chromium-leap-day-dob]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_minimum_age_matches_birthday_rule[chromium-exact-age]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_minimum_age_matches_birthday_rule[chromium-one-day-older]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_minimum_age_matches_birthday_rule[chromium-one-day-younger]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_character_rules_and_normalization[chromium-  QA Review  -whitespace_name_allowed]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_character_rules_and_normalization[chromium-Anne-Marie Review-hyphenated_name_allowed]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_character_rules_and_normalization[chromium-Jos\\xe9 \\u6f22\\u5b57 Review-unicode_name_allowed]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_character_rules_and_normalization[chromium-O'Connor Review-apostrophe_name_allowed]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_length_matches_agreed_limit[chromium-exact-name_max]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_length_matches_agreed_limit[chromium-exact-name_min]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_length_matches_agreed_limit[chromium-minus-one-name_max]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_length_matches_agreed_limit[chromium-minus-one-name_min]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_length_matches_agreed_limit[chromium-plus-one-name_max]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_personal_boundaries.py::test_boundary_name_length_matches_agreed_limit[chromium-plus-one-name_min]": {
+    "module": "Onboarding",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_csv_contracts.py::test_screening_csv_validation_and_final_row_accounting[chromium-duplicate-row]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_csv_contracts.py::test_screening_csv_validation_and_final_row_accounting[chromium-empty]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_csv_contracts.py::test_screening_csv_validation_and_final_row_accounting[chromium-missing-header]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_csv_contracts.py::test_screening_csv_validation_and_final_row_accounting[chromium-partial-invalid]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_csv_contracts.py::test_screening_csv_validation_and_final_row_accounting[chromium-row-limit-plus-one]": {
+    "module": "Screening",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_csv_contracts.py::test_screening_csv_validation_and_final_row_accounting[chromium-row-limit]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_screening_csv_contracts.py::test_screening_csv_validation_and_final_row_accounting[chromium-valid]": {
+    "module": "Screening",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_session_backend.py::test_negative_logout_revokes_refresh_token[chromium]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_session_backend.py::test_negative_post_logout_access_obeys_agreed_revocation_policy[chromium]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_session_backend.py::test_negative_real_issued_access_token_expires[chromium]": {
+    "module": "Login",
+    "category": "Negative",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_session_backend.py::test_positive_real_refresh_produces_usable_access_token[chromium]": {
+    "module": "Login",
+    "category": "Positive",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_deposit_sale_relationship_matches_policy[chromium-above-sale]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_deposit_sale_relationship_matches_policy[chromium-below-sale]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_deposit_sale_relationship_matches_policy[chromium-equal-to-sale]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-max-deposit]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-max-minus-step-deposit]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-max-minus-step-sale-value]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-max-plus-step-deposit]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-max-plus-step-sale-value]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-max-sale-value]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-negative-deposit]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-negative-sale-value]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-zero-deposit]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_financial_value_matches_agreed_rules[chromium-zero-sale-value]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_boundary_money_precision_matches_rounding_policy[chromium]": {
+    "module": "Transactions",
+    "category": "Unclassified",
+    "requires_real_camera": false
+  },
+  "tests/ui/review/workflows/test_transaction_contracts.py::test_negative_concurrent_edit_obeys_conflict_policy[chromium]": {
+    "module": "Transactions",
+    "category": "Negative",
+    "requires_real_camera": false
+  }
+}

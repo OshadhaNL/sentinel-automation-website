@@ -1,0 +1,6 @@
+{
+  "individual": {"owner": "CLIENT_A", "other": "CLIENT_B", "url": "https://sentinel-austrac-qa-be.northlark.com/api/v1/clients/OWNED_INDIVIDUAL_ID/kyc-form", "denied_status": null},
+  "entity": {"owner": "CLIENT_A", "other": "CLIENT_B", "url": "https://sentinel-austrac-qa-be.northlark.com/api/v1/clients/OWNED_ENTITY_ID/kyc-form", "denied_status": null},
+  "transaction": {"owner": "CLIENT_A", "other": "CLIENT_B", "url": "https://sentinel-austrac-qa-be.northlark.com/api/v1/transactions/OWNED_TRANSACTION_ID", "denied_status": null},
+  "document": {"owner": "CLIENT_A", "other": "CLIENT_B", "url": "https://sentinel-austrac-qa-be.northlark.com/api/v1/documents/download-file?fileKey=OWNED_DOCUMENT_KEY", "denied_status": null}
+}

@@ -1,0 +1,27 @@
+module,scenario,status,tests,requirements
+Transactions,Cancel/close/reload/leave an edited record; reopen and compare all form values,New: 4 passed live,tests/ui/review/test_workflow_recovery.py,
+Onboarding,Leave individual/entity unsent draft; verify no pending record,New: 4 passed live,tests/ui/review/test_workflow_recovery.py,Proceed performs a POST before consent; read-only tests never click it
+Screening,Leave unsent individual/organization draft; revisit clean form,New: 2 passed live,tests/ui/review/test_workflow_recovery.py,
+Transactions,Recover from list HTTP 500/503 and network failure without re-login,New: 3 passed live,tests/ui/review/test_workflow_recovery.py,Failures simulated locally
+Login,Expired and locally removed sessions across ten routes,New: 20 passed live,tests/ui/review/test_session_workflows.py,Client recovery only; actual server TTL/revocation remains unverified
+Transactions,"Create/edit/reload same ID, amounts, choices and parties",New: implemented; write validation pending,tests/ui/review/workflows/test_transaction_lifecycle.py,Two disposable parties and write opt-ins
+Transactions,Failed update leaves durable original; retry saves same record,New: 2 implemented; write validation pending,tests/ui/review/workflows/test_transaction_lifecycle.py,Simulated save failures; actual initial creation and retry require opt-in
+Transactions,Double click creates exactly one record after reload/search,New: implemented; write validation pending,tests/ui/review/workflows/test_transaction_lifecycle.py,Persistent records remain for audit
+Transactions,Export/download,Existing retained; not rerun,tests/ui/test_transaction_page.py::TestTransactionExtendedReadOnly::test_positive_export_download,Existing export test; not duplicated
+Onboarding,Fresh individual/entity interrupted creation and exact-ID resume,New: 2 implemented; write validation pending,tests/ui/review/workflows/test_onboarding_lifecycle.py,New test clients remain for audit
+Onboarding,Verified individual KYC/risk/completion/reload/profile chain,New: implemented; write validation pending,tests/ui/review/workflows/test_onboarding_lifecycle.py,Fresh disposable verified pending client per run
+Onboarding,Real-camera/OCR/review/exact-ID reopen,Existing retained; not rerun,tests/ui/test_client_reuse_poc.py,Camera and approved test identity assets
+Onboarding,Entity KYC/ownership/risk interactions,Existing retained; not rerun,tests/ui/test_entity_sections_functional_page.py,Disposable entity and existing risk write gates
+Profiles,Own document upload/reload/preview/cancel-delete/delete/absence,New: implemented; write validation pending,tests/ui/review/workflows/test_document_lifecycle.py,Empty disposable slot plus write/delete opt-ins
+Profiles,Valid PNG at upload byte limit minus one/exact/plus one,Implemented; exact frontend byte limit verified; persistent validation pending,tests/ui/review/workflows/test_document_lifecycle.py,10 MiB inclusive; document write/delete opt-ins and disposable empty slot
+Profiles,Invalid extension/empty file/preview/download,Existing retained; not rerun,tests/ui/profiles/individual/test_individual_documents_page.py,Existing upload fixtures/gates
+Screening,New individual/organization ongoing analysis/daily/reopen/remove,New: 2 implemented; provider and write validation pending,tests/ui/review/workflows/test_screening_lifecycle.py,Provider use and deletion opt-ins
+Screening,Resolve fresh analysis hit in each category; reload same IDs/counts,New: 3 implemented; provider and write validation pending,tests/ui/review/workflows/test_screening_lifecycle.py,Approved match-producing provider test name; not an existing client analysis
+Login,Five role UI/API permission contracts,New: Admin example passed; four roles need fixtures/policy,tests/ui/review/test_role_permissions.py,Observed Admin allowed routes only; no complete role policy claimed
+Login,Backend token expiry/revocation and cross-client ownership,Extended; see all_remaining_coverage.csv for cases and execution prerequisites,,"Real TTL, disposable identities and owned test records; no cross-tenant enumeration"
+Onboarding,"Name limits, DOB/age/leap day and expiry boundaries",Extended; see all_remaining_coverage.csv for cases and execution prerequisites,,"Numeric limits, age requirement, accepted dates and timezone"
+Profiles,"MIME mismatch, duplicate filename, failed replacement",Extended; see all_remaining_coverage.csv for cases and execution prerequisites,,Content detection and overwrite/version behaviour must be defined
+Transactions,"Concurrent edits, zero/negative/max/deposit-to-sale rules",Extended; see all_remaining_coverage.csv for cases and execution prerequisites,,Define last-write/conflict response and accepted financial ranges
+Screening,"CSV limits, duplicate rows and partial failures",Extended; see all_remaining_coverage.csv for cases and execution prerequisites,,"Required headers, max rows/bytes and duplicate/retry policy"
+Access Control,Create/disable accounts and invitation expiry/email delivery,Extended; see all_remaining_coverage.csv for cases and execution prerequisites,,Do not send external messages or disable supplied account
+Config,Tenant config/reminders persistence and boundaries,Extended; see all_remaining_coverage.csv for cases and execution prerequisites,,Tenant-wide notification effects; do not alter shared settings

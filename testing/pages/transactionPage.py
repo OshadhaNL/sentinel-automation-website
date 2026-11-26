@@ -1184,6 +1184,18 @@ class TransactionPage:
             '[role="alert"], .err-meg, .war-meg'
         ).all_text_contents() if s.strip()]
 
+    def choose_or_create_property(self, address):
+        """Current QA uses a searchable property selector. May create a property."""
+        dropdown = self.dropdown_for('property')
+        dropdown.locator('.ant-select-selector').click()
+        dropdown.locator('input[role="combobox"]').fill(address)
+        option = self.page.locator('.ant-select-dropdown:visible .ant-select-item-option').filter(
+            has_text=re.compile(rf'^(?:Add ")?{re.escape(address)}"?$')
+        )
+        expect(option).to_have_count(1, timeout=20000)
+        option.click()
+        expect(dropdown.locator('.ant-select-selection-item')).to_have_text(address, timeout=20000)
+
     def select_first_party_for_test(self, role, exclude_names=()):
         """Select a real, distinct client and confirm the correct role in the details grid."""
         self.require_party_enabled(role)

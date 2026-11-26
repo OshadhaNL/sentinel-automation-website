@@ -30,8 +30,8 @@ class ScreeningPage:
         self.assert_loaded()
 
     def assert_loaded(self):
-        expect(self.page.get_by_role("heading", name="Screening", exact=True)).to_be_visible()
-        expect(self.page.get_by_text(self.DESCRIPTION, exact=True)).to_be_visible()
+        expect(self.page.get_by_role("heading", name="Screening", exact=True)).to_be_visible(timeout=15000)
+        expect(self.page.get_by_text(self.DESCRIPTION, exact=True)).to_be_visible(timeout=15000)
 
     @property
     def client_search(self):

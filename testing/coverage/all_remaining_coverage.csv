@@ -1,0 +1,19 @@
+file,module,added_cases,passed,not_executed,prerequisite
+testing/tests/ui/review/test_access_control_failures.py,Access Control,24,24,0,
+testing/tests/ui/review/test_api_security.py,Login,20,20,0,
+testing/tests/ui/review/test_calendar_boundaries.py,Profiles / Transactions,6,6,0,
+testing/tests/ui/review/test_camera_recovery.py,Onboarding,4,0,4,WORKFLOW_CAMERA_CLIENT_ID: approved unverified individual.
+testing/tests/ui/review/test_config_boundaries.py,Config,37,37,0,
+testing/tests/ui/review/test_config_failures.py,Config,4,4,0,
+testing/tests/ui/review/test_cross_client_security.py,Login,4,0,4,"Two supplied ownership accounts, exact owned resources and approved denial policy."
+testing/tests/ui/review/test_invitation_expiry.py,Login,2,0,2,Approved expired/used invitation URL.
+testing/tests/ui/review/test_profile_save_failures.py,Profiles,13,13,0,
+testing/tests/ui/review/test_screening_provider_failures.py,Screening,16,16,0,
+testing/tests/ui/review/test_transaction_upload_boundaries.py,Transactions,17,17,0,
+testing/tests/ui/review/workflows/test_account_lifecycle.py,Access Control,5,0,5,Feature opt-in and disposable fixtures; see README section 12. No business outcome verified.
+testing/tests/ui/review/workflows/test_config_lifecycle.py,Config,2,0,2,Feature opt-in and disposable fixtures; see README section 12. No business outcome verified.
+testing/tests/ui/review/workflows/test_document_lifecycle.py,Profiles,5,0,5,Feature opt-in and disposable fixtures; see README section 12. No business outcome verified.
+testing/tests/ui/review/workflows/test_personal_boundaries.py,Onboarding,18,0,18,Feature opt-in and disposable fixtures; see README section 12. No business outcome verified.
+testing/tests/ui/review/workflows/test_screening_csv_contracts.py,Screening,7,0,7,Feature opt-in and disposable fixtures; see README section 12. No business outcome verified.
+testing/tests/ui/review/workflows/test_session_backend.py,Login,4,0,4,Feature opt-in and disposable fixtures; see README section 12. No business outcome verified.
+testing/tests/ui/review/workflows/test_transaction_contracts.py,Transactions,15,0,15,Feature opt-in and disposable fixtures; see README section 12. No business outcome verified.

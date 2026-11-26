@@ -1,0 +1,15 @@
+{
+  "ADMIN": {
+    "pages": [
+      {"path": "/nolimit/app/home", "heading": "Welcome", "allowed": true},
+      {"path": "/nolimit/app/access-control", "heading": "Access Control", "allowed": true}
+    ],
+    "api": [
+      {"url": "https://sentinel-austrac-qa-be.northlark.com/api/v1/auth/profile", "status": 200}
+    ]
+  },
+  "ANALYST": {"pages": [], "api": []},
+  "MLRO": {"pages": [], "api": []},
+  "COMPLIANCE_OFFICER": {"pages": [], "api": []},
+  "CLIENT": {"pages": [], "api": []}
+}

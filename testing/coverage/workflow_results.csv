@@ -1,0 +1,55 @@
+node_id,module,result,browser,date
+tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-ADMIN],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-ANALYST],Login,Not executed: role fixture/policy required,Chromium,2026-11-26
+tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-MLRO],Login,Not executed: role fixture/policy required,Chromium,2026-11-26
+tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-COMPLIANCE_OFFICER],Login,Not executed: role fixture/policy required,Chromium,2026-11-26
+tests/ui/review/test_role_permissions.py::test_role_ui_and_api_permissions_match_approved_matrix[chromium-CLIENT],Login,Not executed: role fixture/policy required,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-home],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-dashboard],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-onboarding],Onboarding,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-profiles],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-transaction-activities],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-screening],Screening,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-activity-logs],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-access-control],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-profile-settings],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_expired_session_returns_to_login[chromium-config],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-home],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-dashboard],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-onboarding],Onboarding,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-profiles],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-transaction-activities],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-screening],Screening,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-activity-logs],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-access-control],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-profile-settings],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_session_workflows.py::test_negative_removed_local_session_cannot_reopen_module[chromium-config],Login,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-cancel],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-close],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-reload],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_transaction_edit_discard_survives_reopen[chromium-navigate],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-reload-individual],Onboarding,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-reload-entity],Onboarding,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-navigate-individual],Onboarding,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_onboarding_draft_exit_never_creates_pending_client[chromium-navigate-entity],Onboarding,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_positive_screening_draft_navigation_does_not_start_analysis[chromium-individual],Screening,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_positive_screening_draft_navigation_does_not_start_analysis[chromium-organization],Screening,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_transaction_list_failure_can_recover_without_relogin[chromium-500],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_transaction_list_failure_can_recover_without_relogin[chromium-503],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/test_workflow_recovery.py::test_negative_transaction_list_failure_can_recover_without_relogin[chromium-offline],Transactions,Passed,Chromium,2026-11-26
+tests/ui/review/workflows/test_document_lifecycle.py::test_positive_upload_preview_cancel_delete_reload_then_delete[chromium],Profiles,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_document_lifecycle.py::test_boundary_document_size_acceptance_matches_displayed_limit[chromium-limit-minus-one],Profiles,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_document_lifecycle.py::test_boundary_document_size_acceptance_matches_displayed_limit[chromium-exact-limit],Profiles,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_document_lifecycle.py::test_boundary_document_size_acceptance_matches_displayed_limit[chromium-limit-plus-one],Profiles,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_onboarding_lifecycle.py::test_positive_new_client_reopens_same_id_after_interruption[chromium-individual],Onboarding,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_onboarding_lifecycle.py::test_positive_new_client_reopens_same_id_after_interruption[chromium-entity],Onboarding,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_onboarding_lifecycle.py::test_positive_verified_individual_kyc_risk_completion_and_profile[chromium],Onboarding,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_ongoing_analysis_reload_reopen_remove_lifecycle[chromium-individual],Screening,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_ongoing_analysis_reload_reopen_remove_lifecycle[chromium-organization],Screening,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_new_analysis_resolution_survives_reload[chromium-Positive Hits],Screening,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_new_analysis_resolution_survives_reload[chromium-False Hits],Screening,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_screening_lifecycle.py::test_positive_new_analysis_resolution_survives_reload[chromium-Possible Hits],Screening,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_transaction_lifecycle.py::test_positive_create_edit_reload_preserves_id_fields_and_parties[chromium],Transactions,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_transaction_lifecycle.py::test_negative_failed_edit_preserves_saved_record_then_retry_succeeds[chromium-500],Transactions,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_transaction_lifecycle.py::test_negative_failed_edit_preserves_saved_record_then_retry_succeeds[chromium-offline],Transactions,Not executed: write workflow disabled,Chromium,2026-11-26
+tests/ui/review/workflows/test_transaction_lifecycle.py::test_negative_double_submit_creates_exactly_one_transaction[chromium],Transactions,Not executed: write workflow disabled,Chromium,2026-11-26

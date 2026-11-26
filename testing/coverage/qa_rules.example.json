@@ -1,0 +1,61 @@
+{
+  "financial": {
+    "sale_allows_zero": null,
+    "sale_allows_negative": null,
+    "sale_maximum": null,
+    "deposit_allows_zero": null,
+    "deposit_allows_negative": null,
+    "deposit_maximum": null,
+    "currency_step": null,
+    "decimal_places": null,
+    "excess_precision": null,
+    "deposit_may_exceed_sale": null,
+    "concurrent_edit": null
+  },
+  "person": {
+    "name_min": null,
+    "name_max": null,
+    "minimum_age": null,
+    "future_dob_allowed": null,
+    "leap_day_dob_allowed": null,
+    "expiry_yesterday_allowed": null,
+    "expiry_today_allowed": null,
+    "expiry_tomorrow_allowed": null,
+    "unicode_name_allowed": null,
+    "hyphenated_name_allowed": null,
+    "apostrophe_name_allowed": null,
+    "whitespace_name_allowed": null,
+    "trim_names": null,
+    "leap_birthday": null
+  },
+  "documents": {
+    "mime_mismatch_allowed": null,
+    "duplicate_filename": null
+  },
+  "session": {
+    "logout_revokes_access": null,
+    "access_expiry_leeway_seconds": null,
+    "password_change_revokes_other_access": null,
+    "password_change_revokes_other_refresh": null
+  },
+  "login": {
+    "maximum_failed_attempts": null,
+    "lockout_seconds": null,
+    "recovery_tolerance_seconds": null,
+    "lockout_status": null
+  },
+  "screening_csv": {
+    "file_field": null,
+    "batch_name_field": null,
+    "name_column": null,
+    "required_headers": null,
+    "maximum_rows": null,
+    "duplicate_rows": null,
+    "partial_failure": null,
+    "summary_id_field": null,
+    "summary_url_template": null,
+    "accepted_count_field": null,
+    "failed_count_field": null,
+    "skipped_count_field": null
+  }
+}
